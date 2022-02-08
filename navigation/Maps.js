@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 
 //vivek change
+//rudra change
 const styles = StyleSheet.create({
     container: {
       flex: 1,
