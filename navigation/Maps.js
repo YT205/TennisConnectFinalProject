@@ -1,50 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
-import MapView from 'react-native-maps';
-import * as React from 'react';
+import React from "react";
+import { SafeAreaView } from "react-navigation";
+import { Text, StyleSheet } from "react-native";
+import MapPage from "./MapPage";
 
 
-export default function Maps() {
+const Maps = ({navigation}) => {
   return (
-    <View style={styles.container}>
-      <MapView style={styles.map} />
-    </View>
-  );
+    <SafeAreaView forceInset={{top: 'always' }}>
+      <MapPage/>
+    </SafeAreaView>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-});
-
-
-// const styles = StyleSheet.create({
-//     container: {
-//       flex: 1,
-//       backgroundColor: '#fff',
-//       alignItems: 'center',
-//       justifyContent: 'center',
-//     },
-//   });
-
-
-// export default function Maps() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Welcome to the Court Maps!</Text>
-//       <MapView style={styles.map} />
-//       <StatusBar style="auto" />
-//     </View>
-
-
-//   );
-// }
-
+export default Maps
