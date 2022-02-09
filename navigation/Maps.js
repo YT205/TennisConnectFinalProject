@@ -1,15 +1,35 @@
 import React from "react";
-import { SafeAreaView } from "react-navigation";
-import { Text, StyleSheet } from "react-native";
-import MapPage from "./MapPage";
+import { Text, StyleSheet, View } from "react-native";
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+
+// import MapPage from "./MapPage";
+// import { SafeAreaView } from "react-navigation";
 
 
-const Maps = ({navigation}) => {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+export default function Maps() {
   return (
-    <SafeAreaView forceInset={{top: 'always' }}>
-      <MapPage/>
-    </SafeAreaView>
-  )
+    <View style={styles.container}>
+      <MapView
+        style={{height: '100%', width: '100%'}}
+        provider={PROVIDER_GOOGLE}
+        showsUserLocation={true}
+      />
+    </View>
+    
+  );
 }
 
-export default Maps
+    // <SafeAreaView forceInset={{top: 'always' }}>
+    //   <MapPage/>
+    // </SafeAreaView>
+
+// export default Maps

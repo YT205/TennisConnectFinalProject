@@ -18,16 +18,20 @@
     ],
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.finalproject.TennisConnect",
       "config":{
-        "googleMaps": {
-          "apiKey": "AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw"
-        }
+        "googleMapsApiKey": "AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw"
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config":{
+        "googleMaps": {
+          "apiKey": "AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw"
+        } 
       }
     },
     "web": {

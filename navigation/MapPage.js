@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
-import MapView from 'react-native-maps';
-// import * as React from 'react';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import React from 'react';
+
+// import * as React from 'react';
 
 
 // export default function Maps() {
@@ -49,12 +50,8 @@ const MapPage = () => {
     <MapView
       styles={styles.map}
       loadingEnabled={true}
-      region={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.015,
-        longitudeDelta: 0.0121
-      }}
+      provider={PROVIDER_GOOGLE}
+      // showsUserLocation={true}
     >
     </MapView>
   );
