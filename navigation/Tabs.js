@@ -21,6 +21,29 @@ const styles = StyleSheet.create({
     }
 })
 
+// const CustomTabBarButton = ({children, onPress}) => (
+//     <TouchableOpacity
+//         style={{
+//             top: -30,
+//             justifyContent: 'center',
+//             alignItems: 'center',
+//             ... styles.shadow
+//         }}
+//         onPress={onPress}
+//     >
+//         <View
+//             style={{
+//                 width: 70,
+//                 height: 70,
+//                 borderRadius: 37,
+//                 backgroundColor: '#022d73'
+//             }}>
+//             {children}
+//         </View>
+//     </TouchableOpacity>    
+// )
+
+
 const Tabs = () => {
     return(
         <Tab.Navigator
