@@ -18,24 +18,22 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.finalproject.TennisConnect",
-      "config":{
-        "googleMapsApiKey": "AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw"
-      }
+      "bundleIdentifier": "com.example.TennisConnect",
+      "config": 
+        "googleMapsApiKey”: “AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw"
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "config":{
-        "googleMaps": {
-          "apiKey": "AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw"
-        } 
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     }
+
+    
   }
+
 }
