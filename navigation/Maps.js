@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default function Maps() {
   return (
       <MapView
