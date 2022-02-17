@@ -1,10 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 import Maps from './Maps';
 import Match from './Match';
 import Forum from './Forum';
+import Account from './Home';
 
 const Tab = createBottomTabNavigator()
 
@@ -18,36 +19,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.5,
         elevation: 5
+        
     }
 })
-
-// const CustomTabBarButton = ({children, onPress}) => (
-//     <TouchableOpacity
-//         style={{
-//             top: -30,
-//             justifyContent: 'center',
-//             alignItems: 'center',
-//             ... styles.shadow
-//         }}
-//         onPress={onPress}
-//     >
-//         <View
-//             style={{
-//                 width: 70,
-//                 height: 70,
-//                 borderRadius: 37,
-//                 backgroundColor: '#022d73'
-//             }}>
-//             {children}
-//         </View>
-//     </TouchableOpacity>    
-// )
 
 
 const Tabs = () => {
     return(
         <Tab.Navigator
-
             screenOptions={{
                 tabBarShowLabel: false,
                 style: {
@@ -63,6 +42,27 @@ const Tabs = () => {
                 }
             }}
         >
+
+            <Tab.Screen name="Account" component={Account} options={{
+                tabBarIcon: ({focused}) => (
+                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                        <Image
+                            source={require('../assets/maps.png')}
+                            resizeMode='contain'
+                            style={{
+                                width: 25,
+                                height: 25,
+                                tintColor: focused ? '#022d73' : '#999999'
+                            }}
+                        />
+                        <Text 
+                            style={{color: focused ? '#022d73' : '#999999', fontSize: 12}}>
+                            Login
+                        </Text>
+                    </View>
+                )
+            }} />
+
             <Tab.Screen name="Maps" component={Maps} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
