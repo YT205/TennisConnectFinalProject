@@ -1,6 +1,11 @@
-import React from "react";
-import { Text, StyleSheet, View } from "react-native";
+import React from 'react'
+import { Text, View, StyleSheet } from "react-native"
+import Btn from "../components/Btn"
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+
 
 // import MapPage from "./MapPage";
 // import { SafeAreaView } from "react-navigation";
@@ -90,7 +95,12 @@ export default function Maps() {
 
       </MapView>
   );
-}
+  }
+
+
+
+
+
 
     // <SafeAreaView forceInset={{top: 'always' }}>
     //   <MapPage/>
