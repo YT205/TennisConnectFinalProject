@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import Maps from './Maps';
 import Match from './Match';
 import Forum from './Forum';
+import ForumHandler from './ForumHandler';
 
 const Tab = createBottomTabNavigator()
 
@@ -21,35 +22,13 @@ const styles = StyleSheet.create({
     }
 })
 
-// const CustomTabBarButton = ({children, onPress}) => (
-//     <TouchableOpacity
-//         style={{
-//             top: -30,
-//             justifyContent: 'center',
-//             alignItems: 'center',
-//             ... styles.shadow
-//         }}
-//         onPress={onPress}
-//     >
-//         <View
-//             style={{
-//                 width: 70,
-//                 height: 70,
-//                 borderRadius: 37,
-//                 backgroundColor: '#022d73'
-//             }}>
-//             {children}
-//         </View>
-//     </TouchableOpacity>    
-// )
-
 
 const Tabs = () => {
     return(
         <Tab.Navigator
-
             screenOptions={{
                 tabBarShowLabel: false,
+                headerShown: false, 
                 style: {
                     nposition: 'absolute',
                     bottom: '25',
@@ -103,7 +82,7 @@ const Tabs = () => {
                 )
             }} />
 
-            <Tab.Screen name="Forum" component={Forum} options={{
+            <Tab.Screen name="Forum" component={ForumHandler} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                         <Image

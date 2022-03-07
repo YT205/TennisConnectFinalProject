@@ -2,9 +2,6 @@ import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 
-// import MapPage from "./MapPage";
-// import { SafeAreaView } from "react-navigation";
-
 
 const styles = StyleSheet.create({
   container: {
@@ -22,8 +19,8 @@ export default function Maps() {
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
         region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: 41.87,
+          longitude: -87.62,
           latitudeDelta: 0.09,
           longitudeDelta: 0.035
         }}>

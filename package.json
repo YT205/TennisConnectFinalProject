@@ -10,10 +10,13 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "github:react-native-community/async-storage",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/native": "^6.0.8",
+    "@react-navigation/native-stack": "^6.5.0",
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
+    "firebase": "^9.6.6",
     "pod-install": "^0.1.31",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -21,7 +24,8 @@
     "react-native-gesture-handler": "^2.2.0",
     "react-native-maps": "0.30.1",
     "react-native-web": "0.17.1",
-    "react-navigation": "^4.4.4"
+    "react-navigation": "^4.4.4",
+    "react-navigation-stack": "^2.10.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
