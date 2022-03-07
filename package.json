@@ -18,6 +18,8 @@
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.6",
     "pod-install": "^0.1.31",
+    "@react-native-firebase/auth": "^14.4.0",
+    "@react-navigation/stack": "^6.1.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
