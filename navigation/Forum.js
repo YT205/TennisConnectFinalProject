@@ -81,7 +81,21 @@ export default function Forum({ navigation }) {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
+      <FlatList
+        keyExtractor={item => item.i}
+          data={postArray}
+          renderItem={({item}) => (
+            <View style={styles.item}>
+              <TouchableOpacity onPress={() => navigation.navigate('Answer', item)}>
+                <Text style={styles.quest}>{item.q}</Text>
+                <Text style={styles.desc}>{item.d}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+      />
+      <Separator/>
+      
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -100,25 +114,10 @@ export default function Forum({ navigation }) {
       <View style={styles.buttonsContainer}>
         <Button
           onPress={Create}
-          color="#f194ff"
+          color="#2145a6"
           title="Post Question"
         ></Button>
       </View>
-
-      <Separator/>
-
-      <FlatList
-        keyExtractor={item => item.i}
-          data={postArray}
-          renderItem={({item}) => (
-            <View style={styles.item}>
-              <TouchableOpacity onPress={() => navigation.navigate('Answer', item)}>
-                <Text style={styles.quest}>{item.q}</Text>
-                <Text style={styles.desc}>{item.d}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-      />
     </SafeAreaView>
   );
 
@@ -176,7 +175,7 @@ const styles = StyleSheet.create({
   separator: {
     marginVertical: 8,
     borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 2,
   },
 });
 

@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 import Maps from './Maps';
-import Match from './Match';
+import MatchHandler from './MatchHandler';
 import ForumHandler from './ForumHandler';
 import Account from './Home';
 
@@ -19,10 +19,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.5,
         elevation: 5
-        
     }
 })
-
 
 const Tabs = () => {
     return(
@@ -84,7 +82,7 @@ const Tabs = () => {
                 )
             }} />
 
-            <Tab.Screen name="Match" component={Match} options={{
+            <Tab.Screen name="Match" component={MatchHandler} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                         <Image

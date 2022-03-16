@@ -1,10 +1,59 @@
-import React from 'react'
-import { Text, View, StyleSheet } from "react-native"
-import Btn from "../components/Btn"
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import React, { Component } from 'react'
+import { Text, View, StyleSheet, Button } from "react-native"
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import { SafeAreaView } from 'react-navigation';
+
+import {tennisCourts} from "../assets/courts.json";
+import * as data from "../assets/courtShort.json";
+
+
+export default class Maps extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      courts: [],
+      error: ""
+    };
+  }
+
+  componentDidMount(){
+    var tempArr = [];
+    data.courtData.map((item) => {
+      tempArr.push({name: item.name, description: item.description, latitude: item.latitude, longitude: item.longitude})
+    })
+    this.setState({courts: [...tempArr]})
+  }
+
+
+  mapMarkers = () => {
+    return this.state.courts.map((court, key) => <Marker
+      key={key}
+      coordinate={{ latitude: court.latitude, longitude: court.longitude }}
+      title={court.name}
+      description={court.address}
+    >
+    </Marker >)
+  }
+
+  render(){
+    return(
+      <MapView
+        style={{height: '100%', width: '100%'}}
+        provider={PROVIDER_GOOGLE}
+        showsUserLocation={true}
+        region={{
+          latitude: 37,
+          longitude: -97,
+          latitudeDelta: 1,
+          longitudeDelta: 1
+        }}
+      >
+      {this.mapMarkers()}
+      </MapView>
+    )
+  }
+}
+
 
 const styles = StyleSheet.create({
   container: {
@@ -13,91 +62,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginVertical: 20,
+  },
+  item: {
+    backgroundColor: '#68c7ed',
+    padding: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
 });
-
-export default function Maps() {
-  return (
-      <MapView
-        style={{height: '100%', width: '100%'}}
-        provider={PROVIDER_GOOGLE}
-        showsUserLocation={true}
-        region={{
-          latitude: 41.87,
-          longitude: -87.62,
-          latitudeDelta: 0.09,
-          longitudeDelta: 0.035
-        }}>
-        <Marker
-          coordinate = {{
-          latitude: 42.0166211,
-          longitude: -88.0741795,
-          }}
-          description = {'2 Courts, Lights Available'}
-          title = {'Meineke Recreation Center'}>
-          
-        </Marker>
-
-        <Marker
-          coordinate = {{
-          latitude: 42.0035238,
-          longitude: -88.0084918,
-          }}
-          description = {'2 Courts, Lights Available'}
-          title = {'Clark Park'}>
-          
-        </Marker>
-
-        <Marker
-          coordinate = {{
-          latitude: 42.033988,
-          longitude: -88.050479,
-          }}
-          description = {'2 Courts, No Lights Available'}
-          title = {'Park St Claire'}>
-          
-        </Marker>
-
-        <Marker
-          coordinate = {{
-          latitude: 42.0312903,
-          longitude: -88.119026,
-          }}
-          description = {'2 Courts, No Lights Available'}
-          title = {'Hoover Park'}>
-          
-        </Marker>
-
-        <Marker
-          coordinate = {{
-          latitude: 42.0061832,
-          longitude: -88.0572353,
-          }}
-          description = {'2 Courts, No Lights Available'}
-          title = {'Kingsport East Courts'}>
-          
-        </Marker>
-
-        <Marker
-          coordinate = {{
-          latitude: 42.0010683,
-          longitude: -88.0689048,
-          }}
-          description = {'1 Court, No Lights Available'}
-          title = {'Sunset Park'}>
-          
-        </Marker>
-
-      </MapView>
-  );
-  }
-
-
-
-
-
-
-    // <SafeAreaView forceInset={{top: 'always' }}>
-    //   <MapPage/>
-    // </SafeAreaView>
-
-// export default Maps

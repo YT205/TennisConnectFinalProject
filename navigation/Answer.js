@@ -2,12 +2,16 @@ import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpaci
 import { React, useEffect, useState } from 'react';
 import { db } from "../Firebase";
 import { setDoc, collection, doc, getDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth'
 
 export default function Answer({navigation}){
     const [ans, onChangeAnswer] = useState(null);
     const [ansArr, onChangeArray] = useState([]);
 
     const forumsRef = collection(db, "Forums");
+
+    const auth = getAuth();
+    const user = auth.currentUser;
 
     useEffect(() => {
       readArray();
@@ -19,7 +23,7 @@ export default function Answer({navigation}){
       }
       else{
         var tempName = getRandomString(10);
-        var tempArray = [...ansArr, {a: ans, l: 0, i: tempName}];
+        var tempArray = [...ansArr, {a: ans, i: tempName, l: [], t: 0}];
         await setDoc(doc(forumsRef, navigation.getParam('i')), { question: navigation.getParam('q'),
          description: navigation.getParam('d'), id: navigation.getParam('i'), answers: tempArray});
         alert("Your answer has been posted!");
@@ -29,12 +33,12 @@ export default function Answer({navigation}){
     }
 
     async function readArray() {
-      var tempAnswersArray = [];
+      // var tempAnswersArray = [];
       const ref = doc(db, "Forums", navigation.getParam('i'))
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
         const post = docSnap.data();
-        tempAnswersArray = post.answers;
+        var tempAnswersArray = [...post.answers];
       } else {
         console.log("No such document!");
       }
@@ -47,16 +51,42 @@ export default function Answer({navigation}){
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
         const post = docSnap.data();
-        tempAnswersArray = post.answers;
+        tempAnswersArray = [...post.answers];
       } else {
         console.log("No such document!");
       }
+      if (user !== null) {
+        var uid = user.uid;
+      }
+      var tempLikesArray = [];
+      var pos = 0;
       for(let i = 0; i < tempAnswersArray.length; i++){
         if(tempAnswersArray[i].i === item.i){
-          tempAnswersArray[i].l = tempAnswersArray[i].l + add;
-          console.log(tempAnswersArray[i])
+          tempLikesArray = tempAnswersArray[i].l;
+          pos = i;
         }
       }
+      var preLike = false;
+      for(let i = 0; i < tempLikesArray.length; i++){
+        if(tempLikesArray[i].uid == uid){
+          if(tempLikesArray[i].like == add){
+            preLike = true;
+          }
+          else if(tempLikesArray[i].like !== add){
+            preLike = true;
+            tempLikesArray[i].like = add;
+          }
+        }
+      }
+      if(!preLike){
+        tempLikesArray.push({like: add, uid: uid})
+      }
+      var total = 0;
+      for(let i = 0; i < tempLikesArray.length; i++){
+        total += tempLikesArray[i].like;
+      }
+      tempAnswersArray[pos].t = total;
+      
       await setDoc(doc(forumsRef, navigation.getParam('i')), { question: navigation.getParam('q'),
          description: navigation.getParam('d'), id: navigation.getParam('i'), answers: tempAnswersArray});
       readArray();
@@ -75,7 +105,7 @@ export default function Answer({navigation}){
               renderItem={({item}) => (
                 <View style={styles.item}>
                   <Text style={styles.question}>{item.a}</Text>
-                  <Text style={styles.desc}>Votes: {item.l}</Text>
+                  <Text style={styles.desc}>Votes: {item.t}</Text>
                   <Button title='Like' onPress={() => likedAnswer(item, 1)}/>
                   <Button title='Dislike' onPress={() => likedAnswer(item, -1)}/>
                 </View>
