@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Maps from './Maps';
 import MatchHandler from './MatchHandler';
 import ForumHandler from './ForumHandler';
-import Account from './Home';
+import HomeHandler from './HomeHandler';
 
 const Tab = createBottomTabNavigator()
 
@@ -42,7 +42,7 @@ const Tabs = () => {
             }}
         >
 
-            <Tab.Screen name="Account" component={Account} options={{
+            <Tab.Screen name="Account" component={HomeHandler} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                         <Image
