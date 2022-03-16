@@ -28,6 +28,7 @@ export default function SignUpScreen({ navigation }) {
             return {
                 ...prev,
                 [eventName]: text
+            
             }
         })
     }
