@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
 import { React, useEffect, useState } from 'react';
 import Btn from "../components/Btn"
+import Txt from "../components/TextBox"
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -8,8 +9,6 @@ import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import { getAuth } from 'firebase/auth'
 import { setDoc, collection, doc, getDocs, getDoc } from 'firebase/firestore';
 import { db } from "./Firebase";
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    width: 200,
+    width: 300,
     margin: 12,
     borderWidth: 2,
     padding: 10,
@@ -66,7 +65,7 @@ export default function editAccount() {
 
     const [age, onChangeAge] = useState(null);
     const [utr, onChangeUTR] = useState(null);
-    const [phone, onChangePhone] = useState(null);
+    const [contact, onChangePhone] = useState(null);
     const [gender, onChangeGender] = useState(null);
     const [name, onChangeName] = useState(null);
     const auth = getAuth();
@@ -74,6 +73,7 @@ export default function editAccount() {
     const usersRef = collection(db, "Users");
 
     async function Create() {
+      console.log("hi")
         const uid = user.uid;
         if(!age){
             alert("Please Enter a Age");
@@ -81,8 +81,8 @@ export default function editAccount() {
         else if(!utr){
             alert("Please Enter a UTR");
         }
-        else if(!phone){
-            alert("Please Enter a Phone");
+        else if(!contact){
+            alert("Please Enter a contact");
         }
         else if(!gender){
             alert("Please Enter a Gender");
@@ -91,7 +91,7 @@ export default function editAccount() {
             alert("Please Enter a Name");
         }
         else{
-            await setDoc(doc(usersRef, uid), {age: age, utr: utr, phone: phone, gender: gender, name: name, id: uid});
+            await setDoc(doc(usersRef, uid), {age: age, utr: utr, contact: contact, gender: gender, name: name, uid: uid});
             onChangeAge("");
             onChangeUTR("");
             onChangePhone("");
@@ -106,32 +106,27 @@ export default function editAccount() {
 
     <SafeAreaView>
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
+          <Txt
             onChangeText={onChangeAge}
             value={age}
             placeholder="Enter Age Here"
           />
-          <TextInput
-            style={styles.input}
+          <Txt
             onChangeText={onChangeUTR}
             value={utr}
             placeholder="Enter UTR Here"
           />
-          <TextInput
-            style={styles.input}
+          <Txt
             onChangeText={onChangePhone}
-            value={phone}
+            value={contact}
             placeholder="Enter Phone Here"
           />
-          <TextInput
-            style={styles.input}
+          <Txt
             onChangeText={onChangeGender}
             value={gender}
             placeholder="Enter Gender Here"
           />
-          <TextInput
-            style={styles.input}
+          <Txt
             onChangeText={onChangeName}
             value={name}
             placeholder="Enter Name Here"
@@ -139,10 +134,7 @@ export default function editAccount() {
         </View>
   
         <View style={styles.buttonsContainer}>
-          <Button
-            onPress={Create}
-            title="Post Info"
-          ></Button>
+          <Btn onClick={() => Create()} title="Update Info" style={{ width: "48%" }} />
         </View>
     </SafeAreaView>
   )

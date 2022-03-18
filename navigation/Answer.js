@@ -3,6 +3,8 @@ import { React, useEffect, useState } from 'react';
 import { db } from "../Firebase";
 import { setDoc, collection, doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'
+import Btn from "../components/Btn"
+import Txt from "../components/TextBox"
 
 export default function Answer({navigation}){
     const [ans, onChangeAnswer] = useState(null);
@@ -113,16 +115,15 @@ export default function Answer({navigation}){
             />
 
             <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
+                <Txt
                   onChangeText={onChangeAnswer}
                   value={ans}
                   placeholder="Enter Answer Here"
                 />
-                <Button
-                  onPress={create}
+                <Btn
+                  onClick={() => create()}
                   title="Post Answer"
-                ></Button>
+                ></Btn>
             </View>            
 
         </SafeAreaView>

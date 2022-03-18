@@ -60,8 +60,7 @@ export default function Match({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      
+    <View>
       <FlatList
         keyExtractor={item => item.uid}
         data={userArr}

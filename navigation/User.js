@@ -11,15 +11,15 @@ export default function Answer({navigation}){
 
     return(
       <SafeAreaView>
-        <View style={styles.mainItem}>
+        <View>
           <Text style={styles.question}>{navigation.getParam('name')}</Text>
         </View>
         <Separator/>
         <View>
-          <Text style={styles.desc}>{navigation.getParam('utr')}</Text>
-          <Text style={styles.desc}>{navigation.getParam('age')}</Text>
-          <Text style={styles.desc}>{navigation.getParam('gender')}</Text>
-          <Text style={styles.desc}>{navigation.getParam('contact')}</Text>
+          <Text style={styles.desc}>UTR: {navigation.getParam('utr')}</Text>
+          <Text style={styles.desc}>Age: {navigation.getParam('age')}</Text>
+          <Text style={styles.desc}>Gender: {navigation.getParam('gender')}</Text>
+          <Text style={styles.desc}>Contact Info: {navigation.getParam('contact')}</Text>
         </View> 
       </SafeAreaView>
     )

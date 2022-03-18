@@ -4,6 +4,7 @@ import { db } from "./Firebase";
 import { setDoc, collection, doc, getDocs, getDoc } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
 import Btn from "../components/Btn"
+import firebase from 'firebase/compat';
   
 export default function Home({ navigation }) {
   

@@ -42,26 +42,6 @@ const Tabs = () => {
             }}
         >
 
-            <Tab.Screen name="Account" component={HomeHandler} options={{
-                tabBarIcon: ({focused}) => (
-                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
-                        <Image
-                            source={require('../assets/maps.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: 25,
-                                height: 25,
-                                tintColor: focused ? '#022d73' : '#999999'
-                            }}
-                        />
-                        <Text 
-                            style={{color: focused ? '#022d73' : '#999999', fontSize: 12}}>
-                            Login
-                        </Text>
-                    </View>
-                )
-            }} />
-
             <Tab.Screen name="Maps" component={Maps} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
@@ -117,6 +97,26 @@ const Tabs = () => {
                         <Text 
                             style={{color: focused ? '#022d73' : '#999999', fontSize: 12}}>
                             Forums
+                        </Text>
+                    </View>
+                )
+            }} />
+
+            <Tab.Screen name="Account" component={HomeHandler} options={{
+                tabBarIcon: ({focused}) => (
+                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                        <Image
+                            source={require('../assets/account.png')}
+                            resizeMode='contain'
+                            style={{
+                                width: 25,
+                                height: 25,
+                                tintColor: focused ? '#022d73' : '#999999'
+                            }}
+                        />
+                        <Text 
+                            style={{color: focused ? '#022d73' : '#999999', fontSize: 12}}>
+                            Account
                         </Text>
                     </View>
                 )

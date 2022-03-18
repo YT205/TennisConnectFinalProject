@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpaci
 import { React, useEffect, useState } from 'react';
 import { db } from "../Firebase";
 import { setDoc, collection, doc, getDocs, getDoc } from 'firebase/firestore';
+import Btn from "../components/Btn"
+import Txt from "../components/TextBox"
 
 class Post {
   constructor(question, description, id) {
@@ -97,26 +99,21 @@ export default function Forum({ navigation }) {
       <Separator/>
       
       <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
+        <Txt
           onChangeText={onChangeQuestion}
           value={quest}
           placeholder="Enter Question Here"
         />
-        <TextInput
-          style={styles.input}
+        <Txt
           onChangeText={onChangeDesc}
           value={desc}
           placeholder="Enter Desription Here"
         />
-      </View>
-
-      <View style={styles.buttonsContainer}>
-        <Button
-          onPress={Create}
+        <Btn
+          onClick={() => Create()}
           color="#2145a6"
           title="Post Question"
-        ></Button>
+        ></Btn>
       </View>
     </SafeAreaView>
   );
