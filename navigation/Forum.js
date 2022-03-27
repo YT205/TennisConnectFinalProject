@@ -83,7 +83,7 @@ export default function Forum({ navigation }) {
   );
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <FlatList
         keyExtractor={item => item.i}
           data={postArray}
@@ -96,7 +96,7 @@ export default function Forum({ navigation }) {
             </View>
           )}
       />
-      <Separator/>
+      {/* <Separator/> */}
       
       <View style={styles.inputContainer}>
         <Txt
@@ -123,8 +123,7 @@ export default function Forum({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: '#c5d7eb',
     justifyContent: 'center',
   },
   buttonsContainer: {
@@ -143,37 +142,30 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 20,
   },
-  input: {
-    height: 40,
-    width: 200,
-    margin: 12,
-    borderWidth: 2,
-    padding: 10,
-  },
-  list: {
-    flexDirection: "column",
-    marginVertical: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  },
-  item: {
-    backgroundColor: '#68c7ed',
-    padding: 15,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
   quest: {
     fontSize: 24,
+    fontFamily: "Helvetica Neue",
+    color: "#f0f0f0"
   },
   desc: {
-    fontSize: 12,
+    fontSize: 14,
+    fontFamily: "Helvetica",
+    color: "#c1c5c9"
   },
   separator: {
     marginVertical: 8,
-    borderBottomColor: '#737373',
+    borderBottomColor: '#283340',
     borderBottomWidth: 2,
   },
+  item: {
+    backgroundColor: '#375e94',
+    padding: 14,
+    borderRadius: 15,
+    borderColor: "#234261",
+    borderWidth: 1,
+    marginVertical: 10,
+    marginHorizontal: 10,
+  }
 });
 
 function getRandomString(length) {

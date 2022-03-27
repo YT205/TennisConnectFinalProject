@@ -3,9 +3,9 @@ import { Text, View, StyleSheet, Button } from "react-native"
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import { SafeAreaView } from 'react-navigation';
 import * as Location from 'expo-location'
+import Btn from '../components/Btn'
 
-import {tennisCourts} from "../assets/courts.json";
-import * as data from "../assets/courtShort.json";
+import * as data from "../assets/courts.json";
 
 let apiKey = 'AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw';
 
@@ -16,20 +16,28 @@ export default class Maps extends Component{
       courts: [],
       latitude: null,
       longitude: null,
-      errorMsg: null,
+      range: 5,
+      numCourts: 1,
+      lights: false,
     };
   }
 
+  receivedValue = (range, numCourts, lights) => {
+    this.setState({range})
+    this.setState({numCourts})
+    this.setState({lights})
+  }
+
   componentDidMount(){
-    // if(this.state.latitude == null){
-    //   this.getLocation();
-    // }
-    var tempArr = [];
-    data.courtData.map((item) => {
-      tempArr.push({name: item.name, description: item.description, latitude: item.latitude, longitude: item.longitude})
-      // console.log(item.name + ": " + this.checkDistance(item.latitude, item.longitude))
-    })
-    this.setState({courts: [...tempArr]})
+    this.getLocation();
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (prevState.range !== this.state.range || prevState.numCourts !== this.state.numCourts || prevState.lights !== this.state.lights) {
+      this.setState({courts: []}, () => {
+        this.pushCourts();
+      }); 
+    }
   }
 
   getLocation = () => {
@@ -40,23 +48,48 @@ export default class Maps extends Component{
       }
       Location.setGoogleApiKey(apiKey);
       let { coords } = await Location.getCurrentPositionAsync();
-      this.setState({longitude: coords.longitude, latitude: coords.latitude});
-      // console.log(coords);
+      this.setState({longitude: coords.longitude, latitude: coords.latitude}, () => {
+        this.pushCourts();
+      });
     })();
   };
 
-  checkDistance = (lat, long) => {
-    // console.log(this.state.latitude + " + " + this.state.longitude)
-    var latDif = lat - this.state.latitude;
-    var longDif = long - this.state.longitude;
-    latDif = Math.abs(latDif);
-    longDif = Math.abs(longDif);
-    var a = latDif * latDif;
-    var b = longDif * longDif;
-    var c = a + b;
-    c = Math.sqrt(c);
-    // c = c * 69;
-    return c;
+  pushCourts = () => {
+    var tempArr = [];
+    data.courtData.map((item) => {
+      if(this.checkDistance(item.latitude, item.longitude) < this.state.range && item.count >= this.state.numCourts && item.lights == this.state.lights){
+        tempArr.push({
+          name: item.name,
+          latitude: item.latitude,
+          longitude: item.longitude,
+          courts: item.count,
+          lights: item.lights,
+          info: item.address,
+          type: item.type,
+        })
+      }
+    })
+    this.setState({courts: [...tempArr]})
+  };
+
+  checkDistance = (lat, lon) => {
+    var lat1 = lat / 57.29577951;
+    var lon1 = lon / 57.29577951;
+    var lat2 = this.state.latitude / 57.29577951;
+    var lon2 = this.state.longitude / 57.29577951;
+
+    var dlon = lon2 - lon1;
+    var dlat = lat2 - lat1;
+    dlat = Math.abs(dlat);
+    dlon = Math.abs(dlon);
+
+    var a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2),2);
+    var c = 2 * Math.asin(Math.sqrt(a));
+    var r = 3956;
+    var d = c * r;
+    d = Math.round(d);
+
+    return d;
   }
 
   mapMarkers = () => {
@@ -64,50 +97,63 @@ export default class Maps extends Component{
       key={key}
       coordinate={{ latitude: court.latitude, longitude: court.longitude }}
       title={court.name}
-      description={court.address}
+      description={court.info}
     >
     </Marker >)
   }
 
   render(){
     return(
-      <MapView
-        style={{height: '100%', width: '100%'}}
-        provider={PROVIDER_GOOGLE}
-        showsUserLocation={true}
-        region={{
-          latitude: 37,
-          longitude: -97,
-          latitudeDelta: 75,
-          longitudeDelta: 75
-        }}
-      >
-      {this.mapMarkers()}
-      </MapView>
+      <SafeAreaView style={styles.container}>
+        <MapView
+          style={styles.map}
+          provider={PROVIDER_GOOGLE}
+          showsUserLocation={true}
+          region={{
+            latitude: 42.04,
+            longitude: -88.1,
+            latitudeDelta: 1,
+            longitudeDelta: 1
+          }}
+        >
+          {this.mapMarkers()}
+        </MapView>
+        
+        <View style={styles.button}>
+          <Btn
+            color="#2145a6"
+            title="Filter"
+            onClick={() => this.props.navigation.navigate('Filters', {
+              receivedValue: this.receivedValue,
+              range: this.state.range,
+              numCourts: this.state.numCourts,
+              lights: this.state.lights,} )}
+          />
+        </View>
+      </SafeAreaView>
+      
     )
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#c5d7eb',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
+  map: {
+    height: '100%',
     width: '100%',
-    marginVertical: 20,
+    top: 0,
+    bottom: 0
   },
-  item: {
-    backgroundColor: '#68c7ed',
-    padding: 15,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
+  button: {
+    position: 'absolute',
+    top: '87%',
+    alignSelf: 'flex-end',
+    padding: 10,
+    width: 100,
+  }
 });

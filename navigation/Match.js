@@ -60,20 +60,21 @@ export default function Match({ navigation }) {
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <FlatList
         keyExtractor={item => item.uid}
         data={userArr}
         renderItem={({item}) => (
           <View style={styles.item}>
             <TouchableOpacity onPress={() => navigation.navigate('Details', item)}>
-              <Text style={styles.name}>Name: {item.name}</Text>
+              <Text style={styles.name}>{item.name}</Text>
+              <Text style={styles.desc}>Age: {item.age}</Text>
               <Text style={styles.desc}>UTR: {item.utr}</Text>
             </TouchableOpacity>
           </View>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -81,32 +82,8 @@ export default function Match({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: '#c5d7eb',
     justifyContent: 'center',
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    marginVertical: 20,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    marginVertical: 20,
-  },
-  input: {
-    height: 40,
-    width: 200,
-    margin: 12,
-    borderWidth: 2,
-    padding: 10,
   },
   list: {
     flexDirection: "column",
@@ -116,16 +93,23 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   item: {
-    backgroundColor: '#68c7ed',
-    padding: 15,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    backgroundColor: '#375e94',
+    padding: 14,
+    borderRadius: 15,
+    borderColor: "#234261",
+    borderWidth: 1,
+    marginVertical: 10,
+    marginHorizontal: 10,
   },
   name: {
     fontSize: 24,
+    fontFamily: "Helvetica Neue",
+    color: "#f0f0f0"
   },
   desc: {
-    fontSize: 14,
+    fontSize: 16,
+    fontFamily: "Helvetica",
+    color: "#c1c5c9"
   },
   separator: {
     marginVertical: 8,

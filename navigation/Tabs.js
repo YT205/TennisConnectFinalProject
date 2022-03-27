@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-import Maps from './Maps';
+import MapsHandler from './MapsHandler';
 import MatchHandler from './MatchHandler';
 import ForumHandler from './ForumHandler';
 import HomeHandler from './HomeHandler';
@@ -42,7 +42,7 @@ const Tabs = () => {
             }}
         >
 
-            <Tab.Screen name="Maps" component={Maps} options={{
+            <Tab.Screen name="Maps" component={MapsHandler} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                         <Image

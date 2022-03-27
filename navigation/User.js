@@ -10,12 +10,12 @@ export default function Answer({navigation}){
     );
 
     return(
-      <SafeAreaView>
-        <View>
-          <Text style={styles.question}>{navigation.getParam('name')}</Text>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.mainItem}>
+          <Text style={styles.name}>{navigation.getParam('name')}</Text>
         </View>
         <Separator/>
-        <View>
+        <View style={styles.item}>
           <Text style={styles.desc}>UTR: {navigation.getParam('utr')}</Text>
           <Text style={styles.desc}>Age: {navigation.getParam('age')}</Text>
           <Text style={styles.desc}>Gender: {navigation.getParam('gender')}</Text>
@@ -28,21 +28,37 @@ export default function Answer({navigation}){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#c5d7eb',
       alignItems: 'center',
       justifyContent: 'center',
     },
     mainItem: {
-      backgroundColor: '#5d8ad4',
-      padding: 15,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      backgroundColor: '#375e94',
+      padding: 14,
+      borderRadius: 15,
+      borderColor: "#234261",
+      borderWidth: 1,
+      marginVertical: 10,
+      marginHorizontal: 10,
     },
-    question: {
+    item: {
+      backgroundColor: '#375e94',
+      padding: 14,
+      borderRadius: 15,
+      borderColor: "#234261",
+      borderWidth: 1,
+      marginVertical: 10,
+      marginHorizontal: 10,
+    },
+    name: {
       fontSize: 32,
+      fontFamily: "Helvetica Neue",
+      color: "#e6e6e6"
     },
     desc: {
       fontSize: 24,
+      fontFamily: "Helvetica Neue",
+      color: "#e6e6e6"
     },
     separator: {
       marginVertical: 8,

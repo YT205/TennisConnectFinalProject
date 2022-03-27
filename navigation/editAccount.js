@@ -13,7 +13,7 @@ import { db } from "./Firebase";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#c5d7eb',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -104,7 +104,7 @@ export default function editAccount() {
 
   return (
 
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
         <View style={styles.inputContainer}>
           <Txt
             onChangeText={onChangeAge}

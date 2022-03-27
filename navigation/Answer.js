@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native';
 import { React, useEffect, useState } from 'react';
 import { db } from "../Firebase";
 import { setDoc, collection, doc, getDoc } from 'firebase/firestore';
@@ -35,7 +35,6 @@ export default function Answer({navigation}){
     }
 
     async function readArray() {
-      // var tempAnswersArray = [];
       const ref = doc(db, "Forums", navigation.getParam('i'))
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
@@ -95,7 +94,7 @@ export default function Answer({navigation}){
     }
 
     return(
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <View style={styles.mainItem}>
                 <Text style={styles.question}>{navigation.getParam('q')}</Text>
                 <Text style={styles.desc}>{navigation.getParam('d')}</Text>
@@ -106,10 +105,20 @@ export default function Answer({navigation}){
               data={ansArr}
               renderItem={({item}) => (
                 <View style={styles.item}>
-                  <Text style={styles.question}>{item.a}</Text>
-                  <Text style={styles.desc}>Votes: {item.t}</Text>
-                  <Button title='Like' onPress={() => likedAnswer(item, 1)}/>
-                  <Button title='Dislike' onPress={() => likedAnswer(item, -1)}/>
+                  <Text style={styles.answer}>{item.a}</Text>
+                  <Text style={styles.votes}>Votes: {item.t}</Text>
+                  <TouchableOpacity onPress={() => likedAnswer(item, 1)}>
+                    <Image
+                      source={require('../assets/like.png')}
+                      style={styles.buttonImageIconStyle}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => likedAnswer(item, -1)}>
+                    <Image
+                      source={require('../assets/dislike.png')}
+                      style={styles.buttonImageIconStyle}
+                    />
+                  </TouchableOpacity>
                 </View>
               )}
             />
@@ -133,8 +142,7 @@ export default function Answer({navigation}){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
+      backgroundColor: '#c5d7eb',
       justifyContent: 'center',
     },
     buttonsContainer: {
@@ -153,30 +161,60 @@ const styles = StyleSheet.create({
       width: '100%',
       marginVertical: 20,
     },
-    input: {
-      height: 40,
-      width: 200,
-      margin: 12,
-      borderWidth: 2,
-      padding: 10,
-    },
     item: {
-      backgroundColor: '#68c7ed',
-      padding: 15,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      backgroundColor: '#ededed',
+      padding: 14,
+      borderRadius: 15,
+      borderColor: "#01033d",
+      borderWidth: 2,
+      marginVertical: 10,
+      marginHorizontal: 10,
     },
     mainItem: {
-      backgroundColor: '#5d8ad4',
-      padding: 15,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      backgroundColor: '#375e94',
+      padding: 14,
+      borderRadius: 15,
+      borderColor: "#234261",
+      borderWidth: 1,
+      marginVertical: 10,
+      marginHorizontal: 10,
     },
     question: {
       fontSize: 24,
+      fontFamily: "Helvetica Neue",
+      color: "#f0f0f0"
+    },
+    answer: {
+      fontSize: 24,
+      fontFamily: "Helvetica Neue",
+      color: "#375e94"
+    },
+    votes: {
+      fontSize: 16,
+      fontFamily: "Helvetica Neue",
+      color: "#375e94"
     },
     desc: {
-      fontSize: 16,
+      fontSize: 14,
+      fontFamily: "Helvetica",
+      color: "#d6d6d6"
+    },
+    buttonImageIconStyle: {
+      padding: 15,
+      margin: 5,
+      height: 25,
+      width: 25,
+      flexDirection: 'row',
+    },
+    buttonFacebookStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: '#485a96',
+      borderWidth: 0.5,
+      borderColor: '#fff',
+      height: 40,
+      borderRadius: 5,
+      margin: 5,
     },
   });
 
