@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 
 
 const Tabs = () => {
+
     return(
         <Tab.Navigator
             screenOptions={{
