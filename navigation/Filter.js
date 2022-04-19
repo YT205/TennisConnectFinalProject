@@ -15,6 +15,7 @@ export default class Filter extends Component{
     }
 
     render(){
+      
       const receivedValue = this.props.navigation.getParam('receivedValue', () => {});
       const range = this.props.navigation.getParam('range', () => {});
       const numCourts = this.props.navigation.getParam('numCourts', () => {});
@@ -76,7 +77,6 @@ export default class Filter extends Component{
         </SafeAreaView>
       )
     }
-    
 }
 
 const styles = StyleSheet.create({

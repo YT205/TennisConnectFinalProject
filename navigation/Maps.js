@@ -10,6 +10,7 @@ import * as data from "../assets/courts.json";
 let apiKey = 'AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw';
 
 export default class Maps extends Component{
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -93,7 +94,8 @@ export default class Maps extends Component{
   }
 
   mapMarkers = () => {
-    return this.state.courts.map((court, key) => <Marker
+    return this.state.courts.map((court, key) => 
+    <Marker
       key={key}
       coordinate={{ latitude: court.latitude, longitude: court.longitude }}
       title={court.name}
