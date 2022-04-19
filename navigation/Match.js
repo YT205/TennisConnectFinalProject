@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { React, useEffect, useState } from 'react';
 import { db } from "../Firebase";
 import { setDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import Btn from '../components/Btn';
 
 class User {
-  constructor(uid, utr, age, name, gender, contact, latitude, longitude) {
+  constructor(uid, utr, age, name, gender, contact, email, rightHand, latitude, longitude) {
     this.uid = uid;
     this.utr = utr;
     this.age = age;
@@ -13,15 +14,26 @@ class User {
     this.contact = contact;
     this.latitude = latitude;
     this.longitude = longitude;
+    this.email = email;
+    this.rightHand = rightHand;
   }
 }
 
+
 export default function Match({ navigation }) {
   const [userArr, onChangeArray] = useState([]);
+  const [filterdArr, setFilter] = useState([]);
+  var handFilter = navigation.getParam('hand');
+  var UTRFilter = navigation.getParam('UTR');
+  var genderFilter = navigation.getParam('Gender');
 
   useEffect(() => {
     readUsers();
-  }, [])
+  },[])
+
+  useEffect(() => {
+      filterPlayers();
+  }, [handFilter, UTRFilter, genderFilter])
 
   async function readUsers() {
     const querySnapshot = await getDocs(collection(db, "Users"));
@@ -31,13 +43,14 @@ export default function Match({ navigation }) {
     });
 
     var tempQuestionsArray = []
+
     tempNames.forEach(async (name) => {
       const ref = doc(db, "Users", name).withConverter(userConverter);
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
         const user = docSnap.data();
-        tempQuestionsArray.push({uid: user.uid, utr: user.utr, age: user.age, name: user.name, gender: user.gender, contact: user.contact, 
-          latitude: user.latitude, longitude: user.longitude});
+        tempQuestionsArray.push({uid: user.uid, utr: user.utr, age: user.age, name: user.name, gender: user.gender, 
+          contact: user.contact, email: user.email, rightHand: user.rightHand});
       } else {
         console.log("No such document!");
       }
@@ -54,35 +67,66 @@ export default function Match({ navigation }) {
         name: user.name,
         gender: user.gender,
         contact: user.contact,
-        latitude: user.latitude,
-        longitude: user.longitude
+        email: user.email,
+        rightHand: user.rightHand,
       };
     },
     fromFirestore: (snapshot, options) => {
       const data = snapshot.data(options);
-      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.latitude, data.longitude);
+      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.email, data.rightHand, data.latitude, data.longitude);
     }
   };
 
+  function filterPlayers(){
+    var tempArr = [];
+    userArr.forEach((user) =>{
+      if(genderFilter === user.gender && handFilter == user.rightHand && UTRFilter === user.utr){
+        tempArr.push(user);
+      }
+    })
+    setFilter(tempArr);
+  }
+
+  // function checkHand(item){
+  //   if(!item.rightHand){
+  //     return(
+  //       <Text style = {styles.desc}>
+  //         Hand Preference is: Left
+  //       </Text>
+  //     );
+  //   }
+  //   else if(item.rightHand){
+  //     return(
+  //       <Text style = {styles.desc}>
+  //         Hand Preference is: Right
+  //       </Text>
+  //     );
+  //   }
+  // }
+
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
+    <FlatList
         keyExtractor={item => item.uid}
-        data={userArr}
+        data = {filterdArr}
         renderItem={({item}) => (
-          <View style={styles.item}>
+          <View style={styles.items}>
             <TouchableOpacity onPress={() => navigation.navigate('Details', item)}>
               <Text style={styles.name}>{item.name}</Text>
               <Text style={styles.desc}>Age: {item.age}</Text>
               <Text style={styles.desc}>UTR: {item.utr}</Text>
+              <Text style={styles.desc}>Email: {item.email}</Text>
             </TouchableOpacity>
           </View>
         )}
       />
+
+      <View style = {styles.mainConatinerStyle}>
+        <Btn onClick={() => navigation.navigate('Filter')} title="Filter" style={styles.floatingMenuButtonStyle}/>
+      </View>
     </SafeAreaView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -90,6 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#c5d7eb',
     justifyContent: 'center',
   },
+  
   list: {
     flexDirection: "column",
     marginVertical: 20,
@@ -97,7 +142,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  item: {
+  items: {
     backgroundColor: '#375e94',
     padding: 14,
     borderRadius: 15,
@@ -109,16 +154,30 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontFamily: "Helvetica Neue",
-    color: "#f0f0f0"
+    color: "blue"
   },
   desc: {
     fontSize: 16,
     fontFamily: "Helvetica",
     color: "#c1c5c9"
   },
+  
   separator: {
     marginVertical: 8,
     borderBottomColor: '#737373',
     borderBottomWidth: 2,
   },
+  mainConatinerStyle: {
+    flexDirection: 'column',
+    flex: 1
+  },
+  floatingMenuButtonStyle: {
+    width: 90,
+    height: 50,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    position: 'absolute',
+    bottom: 10,
+    right: 10
+  }
 });

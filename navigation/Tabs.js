@@ -7,6 +7,7 @@ import MatchHandler from './MatchHandler';
 import ForumHandler from './ForumHandler';
 import HomeHandler from './HomeHandler';
 
+
 const Tab = createBottomTabNavigator()
 
 const styles = StyleSheet.create({

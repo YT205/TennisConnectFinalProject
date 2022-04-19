@@ -9,6 +9,23 @@ export default function Answer({navigation}){
       <View style={styles.separator} />
     );
 
+    // function checkHand(item){
+    //   if(!item){
+    //     return(
+    //       <Text style = {styles.desc}>
+    //         Hand Preference is: Left
+    //       </Text>
+    //     );
+    //   }
+    //   else if(item){
+    //     return(
+    //       <Text style = {styles.desc}>
+    //         Hand Preference is: Right
+    //       </Text>
+    //     );
+    //   }
+    // }
+  
     return(
       <SafeAreaView style={styles.container}>
         <View style={styles.mainItem}>
@@ -20,6 +37,8 @@ export default function Answer({navigation}){
           <Text style={styles.desc}>Age: {navigation.getParam('age')}</Text>
           <Text style={styles.desc}>Gender: {navigation.getParam('gender')}</Text>
           <Text style={styles.desc}>Contact Info: {navigation.getParam('contact')}</Text>
+          <Text style={styles.desc}>Email: {navigation.getParam('email')}</Text>
+          <Text style={styles.desc}>Hand: {navigation.getParam('rightHand')}</Text>
         </View> 
       </SafeAreaView>
     )
