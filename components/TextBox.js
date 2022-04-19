@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         width: "100%",
         borderColor: "#0B3270",
-        borderWidth: 1,
+        borderWidth: 2,
         paddingLeft: 15
     }
 

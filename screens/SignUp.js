@@ -43,7 +43,6 @@ export default function SignUpScreen({ navigation }) {
                 })
                 .catch((error) => {
                     alert(error.message)
-                    // ..
                 });
         } else {
             alert("Passwords are different!")

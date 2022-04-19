@@ -2,9 +2,9 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-import Maps from './Maps';
-import Match from './Match';
-import Forum from './Forum';
+import MapsHandler from './MapsHandler';
+import MatchHandler from './MatchHandler';
+import ForumHandler from './ForumHandler';
 import HomeHandler from './HomeHandler';
 
 const Tab = createBottomTabNavigator()
@@ -19,10 +19,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.5,
         elevation: 5
-        
     }
 })
-
 
 const Tabs = () => {
 
@@ -30,7 +28,7 @@ const Tabs = () => {
         <Tab.Navigator
             screenOptions={{
                 tabBarShowLabel: false,
-                headerShown: false,
+                headerShown: false, 
                 style: {
                     nposition: 'absolute',
                     bottom: '25',
@@ -45,27 +43,7 @@ const Tabs = () => {
             }}
         >
 
-            <Tab.Screen name="Account" component={HomeHandler} options={{
-                tabBarIcon: ({focused}) => (
-                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
-                        <Image
-                            source={require('../assets/maps.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: 25,
-                                height: 25,
-                                tintColor: focused ? '#022d73' : '#999999'
-                            }}
-                        />
-                        <Text 
-                            style={{color: focused ? '#022d73' : '#999999', fontSize: 12}}>
-                            Login
-                        </Text>
-                    </View>
-                )
-            }} />
-
-            <Tab.Screen name="Maps" component={Maps} options={{
+            <Tab.Screen name="Maps" component={MapsHandler} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                         <Image
@@ -85,7 +63,7 @@ const Tabs = () => {
                 )
             }} />
 
-            <Tab.Screen name="Match" component={Match} options={{
+            <Tab.Screen name="Match" component={MatchHandler} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                         <Image
@@ -105,7 +83,7 @@ const Tabs = () => {
                 )
             }} />
 
-            <Tab.Screen name="Forum" component={Forum} options={{
+            <Tab.Screen name="Forum" component={ForumHandler} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                         <Image
@@ -120,6 +98,26 @@ const Tabs = () => {
                         <Text 
                             style={{color: focused ? '#022d73' : '#999999', fontSize: 12}}>
                             Forums
+                        </Text>
+                    </View>
+                )
+            }} />
+
+            <Tab.Screen name="Account" component={HomeHandler} options={{
+                tabBarIcon: ({focused}) => (
+                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                        <Image
+                            source={require('../assets/account.png')}
+                            resizeMode='contain'
+                            style={{
+                                width: 25,
+                                height: 25,
+                                tintColor: focused ? '#022d73' : '#999999'
+                            }}
+                        />
+                        <Text 
+                            style={{color: focused ? '#022d73' : '#999999', fontSize: 12}}>
+                            Account
                         </Text>
                     </View>
                 )
