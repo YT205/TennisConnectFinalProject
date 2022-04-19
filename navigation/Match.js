@@ -19,7 +19,6 @@ class User {
   }
 }
 
-
 export default function Match({ navigation }) {
   const [userArr, onChangeArray] = useState([]);
   const [filterdArr, setFilter] = useState([]);
@@ -76,6 +75,26 @@ export default function Match({ navigation }) {
       return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.email, data.rightHand, data.latitude, data.longitude);
     }
   };
+
+  function checkDistance(lati1, long1, lati2, long2){
+    var lat1 = lati1 / 57.29577951;
+    var lon1 = long1 / 57.29577951;
+    var lat2 = lati2 / 57.29577951;
+    var lon2 = long2 / 57.29577951;
+
+    var dlon = lon2 - lon1;
+    var dlat = lat2 - lat1;
+    dlat = Math.abs(dlat);
+    dlon = Math.abs(dlon);
+
+    var a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2),2);
+    var c = 2 * Math.asin(Math.sqrt(a));
+    var r = 3956;
+    var d = c * r;
+    d = Math.round(d);
+
+    return d;
+  }
 
   function filterPlayers(){
     var tempArr = [];

@@ -6,17 +6,17 @@ import Btn from '../components/Btn';
 import { Checkbox } from 'react-native-paper';
 import Txt from "../components/TextBox"
 import {Picker} from '@react-native-picker/picker';
-
+import Slider from '@react-native-community/slider'
 
 export default function MatchFilter({ navigation }) {
 
   const [rightHand, setHand] = useState('');
   const [utr, onChangeUTR] = useState(0);
   const [gender, setGender] = useState('');
+  const [range, setRange] = useState(5);
 
   return (
     <SafeAreaView style={styles.container}>
-  
       <View style = {styles.item}>
             {/* <Checkbox.Item
               status={rightHand ? 'checked' : 'unchecked'}
@@ -26,55 +26,67 @@ export default function MatchFilter({ navigation }) {
               label="Right Hand"
               labelStyle={styles.text}
             /> */}
-              <Picker
-                selectedValue={rightHand}
-                onValueChange={(itemValue, itemIndex) =>
-                  setHand(itemValue)
-                }>
-                <Picker.Item label="" value="None" />
-                <Picker.Item label="Right" value="Right" />
-                <Picker.Item label="Left" value="Left" />
-              </Picker>
+        <Picker
+          selectedValue={rightHand}
+          onValueChange={(itemValue, itemIndex) =>
+            setHand(itemValue)
+          }>
+          <Picker.Item label="" value="None" />
+          <Picker.Item label="Right" value="Right" />
+          <Picker.Item label="Left" value="Left" />
+        </Picker>
+      </View>
+
+      <View style = {styles.separator}/>
+        <View>
+          <Txt
+          onChangeText={onChangeUTR}
+          value={utr}
+          placeholder="Enter UTR Here"
+          />               
       </View>
 
       <View style = {styles.separator}/>
 
       <View>
-        <Txt
-        onChangeText={onChangeUTR}
-        value={utr}
-        placeholder="Enter UTR Here"
-      />               
-      
+        <Text style = {styles.text2}>
+          Gender Preference:
+        </Text>
+        <Picker
+          selectedValue={gender}
+          onValueChange={(itemValue, itemIndex) =>
+            setGender(itemValue)
+          }
+        >
+        <Picker.Item label="" value="None" />
+        <Picker.Item label="Male" value="Male" />
+        <Picker.Item label="Female" value="Female" />
+        </Picker>
       </View>
 
       <View style = {styles.separator}/>
-    <View>
-      <Text style = {styles.text2}>
-             Gender Preference:
-      </Text>
 
-      <Picker
-      selectedValue={gender}
-      onValueChange={(itemValue, itemIndex) =>
-        setGender(itemValue)
-      }>
+      <View style = {styles.mainConatinerStyle}>
+        <Btn onClick={() => navigation.navigate('Players', {hand: rightHand, UTR: utr, Gender: gender})} 
+          title="Done"
+          style={styles.floatingMenuButtonStyle}
+        />
+      </View>
 
-      <Picker.Item label="" value="None" />
-      <Picker.Item label="Male" value="Male" />
-      <Picker.Item label="Female" value="Female" />
-      </Picker>
-
-    </View>
-
-    <View style = {styles.separator}/>
-
-    <View style = {styles.mainConatinerStyle}>
-      <Btn onClick={() => 
-            navigation.navigate('Players', {hand: rightHand, UTR: utr, Gender: gender})
-      } 
-        title="Done" style={styles.floatingMenuButtonStyle}/>
-    </View>
+      <View style={styles.itemSlider}>
+        <Text style={styles.text}>Distance: {range} miles</Text>
+          <Slider
+            maximumValue={20}
+            minimumValue={1}
+            minimumTrackTintColor="#307ecc"
+            maximumTrackTintColor="#000000"
+            step={1}
+            value={range}
+            onValueChange={
+              (oldVal) => {setRange(oldVal)}
+            }
+          />
+      </View>
 
     </SafeAreaView>
   );

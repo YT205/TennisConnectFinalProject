@@ -29,6 +29,8 @@ export default function editAccount() {
     const auth = getAuth();
     const user = auth.currentUser;
     const usersRef = collection(db, "Users");
+
+    const apiKey = 'AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw';
   
     useEffect(() => {
       getLocation();
