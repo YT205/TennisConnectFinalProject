@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { React, useEffect, useState } from 'react';
 import Btn from "../components/Btn"
 import Txt from "../components/TextBox"
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import { getAuth } from 'firebase/auth'
 import { setDoc, collection, doc, getDocs, getDoc } from 'firebase/firestore';
 import { db } from "./Firebase";
+import * as Location from 'expo-location'
+
 
 const styles = StyleSheet.create({
   container: {
@@ -59,51 +60,90 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 12,
   },
+  text: {
+    fontSize: 24,
+    fontFamily: "Helvetica Neue",
+    color: "#f0f0f0"
+  },
+  itemSwitch: {
+    backgroundColor: '#375e94',
+    padding: 10,
+    borderRadius: 25,
+    borderColor: "#234261",
+    borderWidth: 1,
+    marginVertical: 10,
+    marginHorizontal: 10,
+    flexDirection: 'row',
+  },
 });
 
 export default function editAccount() {
-
     const [age, onChangeAge] = useState(null);
     const [utr, onChangeUTR] = useState(null);
     const [contact, onChangePhone] = useState(null);
     const [gender, onChangeGender] = useState(null);
     const [name, onChangeName] = useState(null);
+    const [lat, onChangeLat] = useState(null);
+    const [lon, onChangeLon] = useState(null);
+    const [sendLoc, onChangeSend] = useState(false);
+
     const auth = getAuth();
     const user = auth.currentUser;
     const usersRef = collection(db, "Users");
 
+    const apiKey = 'AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw';
+
+    useEffect(() => {
+      getLocation();
+    }, [])
+
     async function Create() {
-      console.log("hi")
         const uid = user.uid;
         if(!age){
-            alert("Please Enter a Age");
+          alert("Please Enter a Age");
         }
         else if(!utr){
-            alert("Please Enter a UTR");
+          alert("Please Enter a UTR");
         }
         else if(!contact){
-            alert("Please Enter a contact");
+          alert("Please Enter a contact");
         }
         else if(!gender){
-            alert("Please Enter a Gender");
+          alert("Please Enter a Gender");
         }
         else if(!name){
-            alert("Please Enter a Name");
+          alert("Please Enter a Name");
         }
         else{
-            await setDoc(doc(usersRef, uid), {age: age, utr: utr, contact: contact, gender: gender, name: name, uid: uid});
-            onChangeAge("");
-            onChangeUTR("");
-            onChangePhone("");
-            onChangeGender("");
-            onChangeName("");
-            alert("Your info has been posted!")
+          if(sendLoc){
+            await setDoc(doc(usersRef, uid), {age: age, utr: utr, contact: contact, gender: gender, name: name, 
+              uid: uid, latitude: lat, longitude: lon});
+          }
+          else{
+            await setDoc(doc(usersRef, uid), {age: age, utr: utr, contact: contact, gender: gender, name: name, 
+              uid: uid, latitude: null, longitude: null});
+          }
+          onChangeAge("");
+          onChangeUTR("");
+          onChangePhone("");
+          onChangeGender("");
+          onChangeName("");
+          alert("Your info has been posted!")
         }
     }
-  
+
+    async function getLocation() {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+      }
+      Location.setGoogleApiKey(apiKey);
+      let { coords } = await Location.getCurrentPositionAsync();
+      onChangeLat(coords.latitude);
+      onChangeLon(coords.longitude);
+    }
 
   return (
-
     <SafeAreaView style={styles.container}>
         <View style={styles.inputContainer}>
           <Txt
@@ -131,10 +171,22 @@ export default function editAccount() {
             value={name}
             placeholder="Enter Name Here"
           />
+          <View style={styles.itemSwitch}>
+            <Text style={styles.text}>Use Location: </Text>
+            <Switch
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={sendLoc ? "#f4f3f4" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={
+                (oldVal) => {onChangeSend(oldVal)}
+              }
+              value={sendLoc}
+            />
+          </View>
         </View>
   
         <View style={styles.buttonsContainer}>
-          <Btn onClick={() => Create()} title="Update Info" style={{ width: "48%" }} />
+          <Btn onClick={() => Create()} title="Update Info" style={{width: "48%"}} />
         </View>
     </SafeAreaView>
   )

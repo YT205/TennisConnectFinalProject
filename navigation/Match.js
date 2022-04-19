@@ -4,13 +4,15 @@ import { db } from "../Firebase";
 import { setDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
 
 class User {
-  constructor(uid, utr, age, name, gender, contact) {
+  constructor(uid, utr, age, name, gender, contact, latitude, longitude) {
     this.uid = uid;
     this.utr = utr;
     this.age = age;
     this.name = name;
     this.gender = gender;
     this.contact = contact;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 }
 
@@ -34,7 +36,8 @@ export default function Match({ navigation }) {
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
         const user = docSnap.data();
-        tempQuestionsArray.push({uid: user.uid, utr: user.utr, age: user.age, name: user.name, gender: user.gender, contact: user.contact});
+        tempQuestionsArray.push({uid: user.uid, utr: user.utr, age: user.age, name: user.name, gender: user.gender, contact: user.contact, 
+          latitude: user.latitude, longitude: user.longitude});
       } else {
         console.log("No such document!");
       }
@@ -51,11 +54,13 @@ export default function Match({ navigation }) {
         name: user.name,
         gender: user.gender,
         contact: user.contact,
+        latitude: user.latitude,
+        longitude: user.longitude
       };
     },
     fromFirestore: (snapshot, options) => {
       const data = snapshot.data(options);
-      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact);
+      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.latitude, data.longitude);
     }
   };
 

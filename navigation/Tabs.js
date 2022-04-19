@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, LogBox } from 'react-native';
 
 import MapsHandler from './MapsHandler';
 import MatchHandler from './MatchHandler';
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
 })
 
 const Tabs = () => {
+    LogBox.ignoreAllLogs()
     return(
         <Tab.Navigator
             screenOptions={{
