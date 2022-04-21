@@ -2,6 +2,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import Match from "./Match";
 import User from "./User";
+import Sort from "./MatchFilter"
 
 const screens = {
     Players: {
@@ -9,6 +10,10 @@ const screens = {
     },
     Details: {
         screen: User
+    }
+    ,
+    Filter: {
+        screen : Sort
     }
 }
 

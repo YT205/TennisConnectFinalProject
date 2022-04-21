@@ -1,11 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, LogBox } from 'react-native';
 
 import MapsHandler from './MapsHandler';
 import MatchHandler from './MatchHandler';
 import ForumHandler from './ForumHandler';
 import HomeHandler from './HomeHandler';
+
 
 const Tab = createBottomTabNavigator()
 
@@ -23,7 +24,6 @@ const styles = StyleSheet.create({
 })
 
 const Tabs = () => {
-
     return(
         <Tab.Navigator
             screenOptions={{

@@ -10,6 +10,7 @@ import * as data from "../assets/courts.json";
 let apiKey = 'AIzaSyDUipSL9QVWpu4-z3oV6NvHcdbGILaDKhw';
 
 export default class Maps extends Component{
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -19,13 +20,25 @@ export default class Maps extends Component{
       range: 5,
       numCourts: 1,
       lights: false,
+      typePublic: true,
+      typePrivate: true,
+      proshop: false,
+      clay: false,
+      grass: false,
+      indoor: false,
     };
   }
 
-  receivedValue = (range, numCourts, lights) => {
+  receivedValue = (range, numCourts, lights, typePublic, typePrivate, proshop, clay, grass, indoor) => {
     this.setState({range})
     this.setState({numCourts})
     this.setState({lights})
+    this.setState({typePublic})
+    this.setState({typePrivate})
+    this.setState({proshop})
+    this.setState({clay})
+    this.setState({grass})
+    this.setState({indoor})
   }
 
   componentDidMount(){
@@ -33,7 +46,11 @@ export default class Maps extends Component{
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (prevState.range !== this.state.range || prevState.numCourts !== this.state.numCourts || prevState.lights !== this.state.lights) {
+    if (
+      prevState.range !== this.state.range || prevState.numCourts !== this.state.numCourts || prevState.lights !== this.state.lights || 
+      prevState.typePublic !== this.state.typePublic || prevState.typePrivate !== this.state.typePrivate || prevState.proshop !== this.state.proshop || 
+      prevState.clay !== this.state.clay || prevState.grass !== this.state.grass || prevState.indoor !== this.state.indoor
+      ) {
       this.setState({courts: []}, () => {
         this.pushCourts();
       }); 
@@ -57,7 +74,11 @@ export default class Maps extends Component{
   pushCourts = () => {
     var tempArr = [];
     data.courtData.map((item) => {
-      if(this.checkDistance(item.latitude, item.longitude) < this.state.range && item.count >= this.state.numCourts && item.lights == this.state.lights){
+      if(
+        this.checkDistance(item.latitude, item.longitude) < this.state.range && item.count >= this.state.numCourts && 
+        item.lights == this.state.lights && item.proshop == this.state.proshop && item.clay == this.state.clay && item.grass == this.state.grass &&
+        this.typeChecker(item.type, this.state.typePublic, this.state.typePrivate) && item.indoor == this.state.indoor
+       ){
         tempArr.push({
           name: item.name,
           latitude: item.latitude,
@@ -66,11 +87,25 @@ export default class Maps extends Component{
           lights: item.lights,
           info: item.address,
           type: item.type,
+          shop: item.proshop,
+          clay: item.clay,
+          grass: item.grass,
+          indoor: item.indoor,
         })
       }
     })
     this.setState({courts: [...tempArr]})
   };
+
+  typeChecker = (type, b1, b2) => {
+    if(type == "Public" && b1){
+      return true;
+    }
+    else if(type == "Homeowners Community" && b2){
+      return true;
+    }
+    return false;
+  }
 
   checkDistance = (lat, lon) => {
     var lat1 = lat / 57.29577951;
@@ -93,7 +128,8 @@ export default class Maps extends Component{
   }
 
   mapMarkers = () => {
-    return this.state.courts.map((court, key) => <Marker
+    return this.state.courts.map((court, key) => 
+    <Marker
       key={key}
       coordinate={{ latitude: court.latitude, longitude: court.longitude }}
       title={court.name}
@@ -127,7 +163,14 @@ export default class Maps extends Component{
               receivedValue: this.receivedValue,
               range: this.state.range,
               numCourts: this.state.numCourts,
-              lights: this.state.lights,} )}
+              lights: this.state.lights,
+              typePublic: this.state.typePublic,
+              typePrivate: this.state.typePrivate,
+              proshop: this.state.proshop,
+              clay: this.state.clay,
+              grass: this.state.grass,
+              indoor: this.state.indoor
+            })}
           />
         </View>
       </SafeAreaView>

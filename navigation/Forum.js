@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
-import { React, useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, RefreshControl } from 'react-native';
+import { React, useEffect, useState, useCallback } from 'react';
 import { db } from "../Firebase";
 import { setDoc, collection, doc, getDocs, getDoc } from 'firebase/firestore';
 import Btn from "../components/Btn"
 import Txt from "../components/TextBox"
 
 class Post {
-  constructor(question, description, id) {
+  constructor(question, description, id, charArr) {
     this.question = question;
     this.description = description;
     this.id = id;
@@ -14,36 +14,18 @@ class Post {
 }
 
 export default function Forum({ navigation }) {
-  var questionName = "";
-
-  const [quest, onChangeQuestion] = useState(null);
-  const [desc, onChangeDesc] = useState(null);
   const [postArray, onChangeArray] = useState([]);
-
-  const forumsRef = collection(db, "Forums");
+  const [refreshing, setRefreshing] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    ReadNames();
-  }, [])
+    if(search.length == 0){
+      readNames();
+    }
+    searchWord(search);
+  }, [search])
 
-  async function Create() {
-    if(!quest){
-      alert("Please Enter a Question");
-    }
-    else if(!desc){
-      alert("Please Enter a Description");
-    }
-    else{
-      questionName = getRandomString(10);
-      await setDoc(doc(forumsRef, questionName), {question: quest, description: desc, id: questionName, answers: []});
-      onChangeQuestion("");
-      onChangeDesc("");
-      alert("Your question has been posted!")
-      ReadNames();
-    }
-  }
-
-  async function ReadNames() {
+  async function readNames() {
     const querySnapshot = await getDocs(collection(db, "Forums"));
     const tempNames = []
     querySnapshot.forEach((doc) => {
@@ -62,6 +44,19 @@ export default function Forum({ navigation }) {
       }
       onChangeArray(tempQuestionsArray);
     })
+    setRefreshing(false);
+  }
+
+  function searchWord(word){ 
+    var tempArr = [];
+    var tempWord
+    for(var i = 0; i < postArray.length; i++){
+      tempWord = postArray[i].q.toLowerCase()
+      if(tempWord.indexOf(word.toLowerCase()) !== -1){
+        tempArr.push(postArray[i]);
+      }
+    }
+    onChangeArray(tempArr);
   }
 
   const questionConverter = {
@@ -78,12 +73,18 @@ export default function Forum({ navigation }) {
     }
   };
 
-  const Separator = () => (
-    <View style={styles.separator} />
-  );
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    readNames();
+  }, [refreshing]);
 
   return (
     <SafeAreaView style={styles.container}>
+      <Txt
+        onChangeText={setSearch}
+        value={search}
+        placeholder="Enter Search Here"
+      />
       <FlatList
         keyExtractor={item => item.i}
           data={postArray}
@@ -95,29 +96,19 @@ export default function Forum({ navigation }) {
               </TouchableOpacity>
             </View>
           )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
       />
-      {/* <Separator/> */}
-      
-      <View style={styles.inputContainer}>
-        <Txt
-          onChangeText={onChangeQuestion}
-          value={quest}
-          placeholder="Enter Question Here"
-        />
-        <Txt
-          onChangeText={onChangeDesc}
-          value={desc}
-          placeholder="Enter Desription Here"
-        />
-        <Btn
-          onClick={() => Create()}
-          color="#2145a6"
-          title="Post Question"
-        ></Btn>
-      </View>
+
+      <Btn
+        style={styles.buttonsContainer}
+        onClick={() => navigation.navigate('Post')}
+        color="#2145a6"
+        title="Post Question"
+      ></Btn>
     </SafeAreaView>
   );
-
 }
 
 const styles = StyleSheet.create({
@@ -135,11 +126,10 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    marginVertical: 20,
+    marginVertical: 10,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -177,12 +167,3 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   }
 });
-
-function getRandomString(length) {
-  var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var result = '';
-  for (var i = 0; i < length; i++) {
-    result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
-  }
-  return result;
-}
