@@ -4,6 +4,7 @@ import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import { SafeAreaView } from 'react-navigation';
 import * as Location from 'expo-location'
 import Btn from '../components/Btn'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as data from "../assets/courts.json";
 
@@ -81,6 +82,7 @@ export default class Maps extends Component{
        ){
         tempArr.push({
           name: item.name,
+          address: item.address,
           latitude: item.latitude,
           longitude: item.longitude,
           courts: item.count,
@@ -122,20 +124,64 @@ export default class Maps extends Component{
     var c = 2 * Math.asin(Math.sqrt(a));
     var r = 3956;
     var d = c * r;
+    d = d * 10;
     d = Math.round(d);
+    d = d / 10;
 
     return d;
   }
 
+  markerPress = async (court) => {
+    try {
+      const value = await AsyncStorage.getItem('court')
+      if(value !== null) {
+        if(value == court.name){
+          this.props.navigation.navigate('Info', {
+            range: this.checkDistance(court.latitude, court.longitude),
+            numCourts: court.courts,
+            lights: court.lights,
+            type: court.type,
+            proshop: court.proshop,
+            clay: court.clay,
+            grass: court.grass,
+            indoor: court.indoor,
+            road: court.address,
+          })
+        }
+        else{
+          try {
+            await AsyncStorage.setItem('court', court.name)
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      }
+      else{
+        try {
+          await AsyncStorage.setItem('court', court.name)
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    } catch(e) {
+      console.log(e);
+    }
+    
+  }
+
   mapMarkers = () => {
     return this.state.courts.map((court, key) => 
-    <Marker
-      key={key}
-      coordinate={{ latitude: court.latitude, longitude: court.longitude }}
-      title={court.name}
-      description={court.info}
-    >
-    </Marker >)
+      <Marker
+        key={key}
+        coordinate={{ latitude: court.latitude, longitude: court.longitude }}
+        title={court.name}
+        description={court.info}
+        onPress={() => 
+          this.markerPress(court)
+        }
+      >
+      </Marker >
+    )
   }
 
   render(){
