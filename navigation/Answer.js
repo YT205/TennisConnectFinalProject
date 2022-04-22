@@ -142,7 +142,7 @@ export default function Answer({navigation}){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#c5d7eb',
+      backgroundColor: '#536872',
       justifyContent: 'center',
     },
     buttonsContainer: {
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#ededed',
       padding: 14,
       borderRadius: 15,
-      borderColor: "#01033d",
+      borderColor: "#558099",
       borderWidth: 2,
       marginVertical: 10,
       marginHorizontal: 10,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     question: {
       fontSize: 24,
       fontFamily: "Helvetica Neue",
-      color: "#f0f0f0"
+      color: "#f9f9f9"
     },
     answer: {
       fontSize: 24,
@@ -192,12 +192,12 @@ const styles = StyleSheet.create({
     votes: {
       fontSize: 16,
       fontFamily: "Helvetica Neue",
-      color: "#375e94"
+      color: "#5CB85C"
     },
     desc: {
       fontSize: 14,
       fontFamily: "Helvetica",
-      color: "#d6d6d6"
+      color: "#5cb85c"
     },
     buttonImageIconStyle: {
       padding: 15,

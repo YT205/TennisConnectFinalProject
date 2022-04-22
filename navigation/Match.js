@@ -150,7 +150,7 @@ export default function Match({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#c5d7eb',
+    backgroundColor: '#536872',
     justifyContent: 'center',
   },
   
@@ -161,8 +161,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  items: {
-    backgroundColor: '#375e94',
+  item: {
+    backgroundColor: '#0f5e9c',
     padding: 14,
     borderRadius: 15,
     borderColor: "#234261",

@@ -112,10 +112,17 @@ export default function Forum({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+
+  text: {
+    fontSize: 20,
+    fontFamily: 'Akshar-Light'
+  },
+
   container: {
     flex: 1,
-    backgroundColor: '#c5d7eb',
+    backgroundColor: '#e7eff6',
     justifyContent: 'center',
+    
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -134,24 +141,27 @@ const styles = StyleSheet.create({
   },
   quest: {
     fontSize: 24,
-    fontFamily: "Helvetica Neue",
-    color: "#f0f0f0"
+    fontFamily: "Avenir",
+    fontSize: 24,
+    // fontFamily: 'Akshar-Medium',
+    color: "#f9f9f9"
+    
   },
   desc: {
-    fontSize: 14,
-    fontFamily: "Helvetica",
-    color: "#c1c5c9"
+    fontSize: 16,
+    fontFamily: 'Courier-Bold',
+    color: "#5CB85C"
   },
   separator: {
     marginVertical: 8,
-    borderBottomColor: '#283340',
+    borderBottomColor: '#0f5e9c',
     borderBottomWidth: 2,
   },
   item: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#0f5e9c',
     padding: 14,
     borderRadius: 15,
-    borderColor: "#234261",
+    borderColor: "#0f5e9c",
     borderWidth: 1,
     marginVertical: 10,
     marginHorizontal: 10,

@@ -172,7 +172,7 @@ export default function editAccount() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#c5d7eb',
+    backgroundColor: '#558099',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -231,8 +231,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  item1: {
-    backgroundColor: '#68c7ed',
+  item: {
+    backgroundColor: '#5cb85c',
     padding: 15,
     marginVertical: 8,
     marginHorizontal: 16,
