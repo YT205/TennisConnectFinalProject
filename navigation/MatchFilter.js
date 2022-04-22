@@ -10,75 +10,80 @@ import Slider from '@react-native-community/slider'
 
 export default function MatchFilter({ navigation }) {
 
-  const [rightHand, setHand] = useState('');
+  const [rightHand, setHandR] = useState(true);
+  const [leftHand, setHandL] = useState(true);
+
   const [utr, onChangeUTR] = useState(0);
-  const [gender, setGender] = useState('');
+
+  const [male, setMale] = useState(true);
+  const [female, setFemale] = useState(true);
+
   const [range, setRange] = useState(5);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style = {styles.item}>
-            {/* <Checkbox.Item
+
+          <View style={styles.item}>
+            <Checkbox.Item
               status={rightHand ? 'checked' : 'unchecked'}
               onPress={() => {
-                setHand(!rightHand);
+                setHandR(!rightHand);
               }}
-              label="Right Hand"
+              label="Righty"
               labelStyle={styles.text}
-            /> */}
-        <Picker
-          selectedValue={rightHand}
-          onValueChange={(itemValue, itemIndex) =>
-            setHand(itemValue)
-          }>
-          <Picker.Item label="" value="None" />
-          <Picker.Item label="Right" value="Right" />
-          <Picker.Item label="Left" value="Left" />
-        </Picker>
+            />
+            <Checkbox.Item
+              status={leftHand ? 'checked' : 'unchecked'}
+              onPress={() => {
+                setHandL(!leftHand)
+              }}
+              label="Lefty"
+              labelStyle={styles.text}
+            />
+          </View>
+
+          <View style={styles.item}>
+            <Checkbox.Item
+              status={male ? 'checked' : 'unchecked'}
+              onPress={() => {
+                setMale(!male);
+              }}
+              label="Male"
+              labelStyle={styles.text}
+            />
+            <Checkbox.Item
+              status={female ? 'checked' : 'unchecked'}
+              onPress={() => {
+                setFemale(!female)
+              }}
+              label="Female"
+              labelStyle={styles.text}
+            />
+          </View>
+
+      <View style={styles.item}>
+        <Text style={styles.text}>UTR: {utr} </Text>
+          <Slider
+            maximumValue={17}
+            minimumValue={0}
+            minimumTrackTintColor="#30B731"
+            maximumTrackTintColor="#000000"
+            step={1}
+            value={utr}
+            onValueChange={
+              (oldVal) => {onChangeUTR(oldVal)}
+            }
+          />
       </View>
 
-      <View style = {styles.separator}/>
-        <View>
-          <Txt
-          onChangeText={onChangeUTR}
-          value={utr}
-          placeholder="Enter UTR Here"
-          />               
-      </View>
+      
 
-      <View style = {styles.separator}/>
-
-      <View>
-        <Text style = {styles.text2}>
-          Gender Preference:
-        </Text>
-        <Picker
-          selectedValue={gender}
-          onValueChange={(itemValue, itemIndex) =>
-            setGender(itemValue)
-          }
-        >
-        <Picker.Item label="" value="None" />
-        <Picker.Item label="Male" value="Male" />
-        <Picker.Item label="Female" value="Female" />
-        </Picker>
-      </View>
-
-      <View style = {styles.separator}/>
-
-      <View style = {styles.mainConatinerStyle}>
-        <Btn onClick={() => navigation.navigate('Players', {hand: rightHand, UTR: utr, Gender: gender})} 
-          title="Done"
-          style={styles.floatingMenuButtonStyle}
-        />
-      </View>
-
-      <View style={styles.itemSlider}>
+      <View style={styles.item}>
         <Text style={styles.text}>Distance: {range} miles</Text>
           <Slider
             maximumValue={20}
             minimumValue={1}
-            minimumTrackTintColor="#307ecc"
+            minimumTrackTintColor="#30B731"
             maximumTrackTintColor="#000000"
             step={1}
             value={range}
@@ -88,6 +93,12 @@ export default function MatchFilter({ navigation }) {
           />
       </View>
 
+      <Btn
+        style={styles.mainConatinerStyle}
+        onClick={() => navigation.navigate('Players', {handR: rightHand, handL: leftHand, UTR: utr, male: male, female: female, range: range})} 
+        title="Done"
+      ></Btn>
+
     </SafeAreaView>
   );
 }
@@ -95,52 +106,54 @@ export default function MatchFilter({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#c5d7eb',
+    backgroundColor: '#CAD1D5',
     justifyContent: 'center',
   },
   text: {
     fontSize: 24,
-    fontFamily: "Helvetica Neue",
-    color: "white"
+    fontFamily: "San-Fransisco",
+    color: "#CAD1D5",
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: "column",
   },
   text2: {
     fontSize: 24,
-    fontFamily: "Helvetica Neue",
-    color: "blue",
-    textDecorationLine: 'underline'
+    fontFamily: "San-Fransisco",
+    color: "#30B731",
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: "column",
   },
   list: {
     flexDirection: "column",
-    marginVertical: 20,
+    marginVertical: 30,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
   },
   objects: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#30B731',
     padding: 14,
     borderRadius: 15,
     borderColor: "#234261",
     borderWidth: 1,
-    marginVertical: 10,
+    marginVertical: 30,
     marginHorizontal: 10,
   },
   separator: {
-    marginVertical: 8,
+    marginVertical: 30,
     borderBottomColor: '#737373',
     borderBottomWidth: 2,
   },
-  mainConatinerStyle: {
-    flexDirection: 'column',
-    flex: 1
-},
+ 
 floatingMenuButtonStyle: {
     width: 190,
     height: 50,
     paddingHorizontal: 10,
     paddingVertical: 10,
     position: 'absolute',
-    bottom: 150,
+    bottom: 0,
     left:'30%'
 },
 item: {
@@ -149,8 +162,16 @@ item: {
   borderRadius: 10,
   borderColor: "#234261",
   borderWidth: 1,
-  marginVertical: 10,
+  marginVertical: 20,
   marginHorizontal: 10,
 },
+mainConatinerStyle: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#30B731',
+  width: '100%',
+  marginVertical: 0,
+}
 
 });

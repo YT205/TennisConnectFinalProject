@@ -11,7 +11,7 @@ export default function Home({ navigation }) {
 
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={{fontSize: 34, fontWeight: "800", marginBottom: 20}}>Welcome! This is your account!</Text>
+        <Text style={{fontSize: 34, fontWeight: "800", marginBottom: 20}}></Text>
         <Btn title="Log Out" onClick={() => firebase.auth().signOut()} />
         <Btn title="Update Account Info" onClick={() => navigation.navigate('Edit')} />
       </SafeAreaView>
@@ -22,17 +22,17 @@ export default function Home({ navigation }) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#558099',
+      backgroundColor: '#CAD1D5',
       alignItems: 'center',
       justifyContent: 'center',
     },
     buttonsContainer: {
       flexDirection: 'row',
-      flexWrap: 'wrap',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
-      marginVertical: 20,
+      backgroundColor: '#30B731',
+      width: '90%',
+      marginVertical: 10,
     },
     inputContainer: {
       flexDirection: 'row',

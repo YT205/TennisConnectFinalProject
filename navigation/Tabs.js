@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
 })
 
 const Tabs = () => {
+    LogBox.ignoreAllLogs()
     return(
         <Tab.Navigator
             screenOptions={{

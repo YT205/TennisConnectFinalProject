@@ -22,17 +22,20 @@ class User {
 export default function Match({ navigation }) {
   const [userArr, onChangeArray] = useState([]);
   const [filterdArr, setFilter] = useState([]);
-  var handFilter = navigation.getParam('hand');
+  var handFilterR = navigation.getParam('handR');
+  var handFilterL = navigation.getParam('handL');
   var UTRFilter = navigation.getParam('UTR');
-  var genderFilter = navigation.getParam('Gender');
+  var genderFilterM = navigation.getParam('male');
+  var genderFilterF = navigation.getParam('female');
+  var rangeFilter = navigation.getParam('range');
 
   useEffect(() => {
     readUsers();
   },[])
 
   useEffect(() => {
-      filterPlayers();
-  }, [handFilter, UTRFilter, genderFilter])
+    filterPlayers();
+  }, [handFilterR, handFilterL, UTRFilter, genderFilterM, genderFilterF, rangeFilter])
 
   async function readUsers() {
     const querySnapshot = await getDocs(collection(db, "Users"));
@@ -76,52 +79,23 @@ export default function Match({ navigation }) {
     }
   };
 
-  function checkDistance(lati1, long1, lati2, long2){
-    var lat1 = lati1 / 57.29577951;
-    var lon1 = long1 / 57.29577951;
-    var lat2 = lati2 / 57.29577951;
-    var lon2 = long2 / 57.29577951;
-
-    var dlon = lon2 - lon1;
-    var dlat = lat2 - lat1;
-    dlat = Math.abs(dlat);
-    dlon = Math.abs(dlon);
-
-    var a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2),2);
-    var c = 2 * Math.asin(Math.sqrt(a));
-    var r = 3956;
-    var d = c * r;
-    d = Math.round(d);
-
-    return d;
-  }
 
   function filterPlayers(){
     var tempArr = [];
     userArr.forEach((user) =>{
-      if(genderFilter === user.gender && handFilter == user.rightHand && UTRFilter === user.utr){
+      // if((genderFilterM === user.gender || genderFilterF === user.gender) && (handFilterL === user.rightHand || handFilterR === user.rightHand) && 
+      // UTRFilter === user.utr){
+      //   tempArr.push(user);
+      // }
+      if((genderFilterM === user.gender) && (handFilterL === user.rightHand) && 
+      UTRFilter === user.utr){
         tempArr.push(user);
       }
+      tempArr.push(user);
     })
     setFilter(tempArr);
   }
 
-  // function checkHand(item){
-  //   if(!item.rightHand){
-  //     return(
-  //       <Text style = {styles.desc}>
-  //         Hand Preference is: Left
-  //       </Text>
-  //     );
-  //   }
-  //   else if(item.rightHand){
-  //     return(
-  //       <Text style = {styles.desc}>
-  //         Hand Preference is: Right
-  //       </Text>
-  //     );
-  //   }
-  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -150,7 +124,7 @@ export default function Match({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#536872',
+    backgroundColor: '#c5d7eb',
     justifyContent: 'center',
   },
   
@@ -161,8 +135,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  item: {
-    backgroundColor: '#0f5e9c',
+  items: {
+    backgroundColor: '#375e94',
     padding: 14,
     borderRadius: 15,
     borderColor: "#234261",
@@ -173,7 +147,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontFamily: "Helvetica Neue",
-    color: "blue"
+    color: "white"
   },
   desc: {
     fontSize: 16,

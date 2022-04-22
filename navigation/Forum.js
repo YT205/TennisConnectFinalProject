@@ -84,6 +84,7 @@ export default function Forum({ navigation }) {
         onChangeText={setSearch}
         value={search}
         placeholder="Enter Search Here"
+
       />
       <FlatList
         keyExtractor={item => item.i}
@@ -112,23 +113,18 @@ export default function Forum({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-
-  text: {
-    fontSize: 20,
-    fontFamily: 'Akshar-Light'
-  },
-
   container: {
     flex: 1,
-    backgroundColor: '#e7eff6',
+    backgroundColor: '#CAD1D5',
     justifyContent: 'center',
-    
+    alignItems: 'center',
   },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
+    backgroundColor: '#30B731',
+    width: '90%',
     marginVertical: 10,
   },
   inputContainer: {
@@ -141,29 +137,26 @@ const styles = StyleSheet.create({
   },
   quest: {
     fontSize: 24,
-    fontFamily: "Avenir",
-    fontSize: 24,
-    // fontFamily: 'Akshar-Medium',
-    color: "#f9f9f9"
-    
+    fontFamily: "San-Fransisco",
+    color: "#f0f0f0"
   },
   desc: {
-    fontSize: 16,
-    fontFamily: 'Courier-Bold',
-    color: "#5CB85C"
+    fontSize: 14,
+    fontFamily: "San-Fransisco",
+    color: "#30B731"
   },
   separator: {
     marginVertical: 8,
-    borderBottomColor: '#0f5e9c',
+    borderBottomColor: '#283340',
     borderBottomWidth: 2,
   },
   item: {
-    backgroundColor: '#0f5e9c',
+    backgroundColor: '#0F497B',
     padding: 14,
     borderRadius: 15,
-    borderColor: "#0f5e9c",
+    borderColor: "#CAD1D5",
     borderWidth: 1,
     marginVertical: 10,
-    marginHorizontal: 10,
+    marginHorizontal: 4,
   }
 });

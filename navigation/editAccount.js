@@ -85,7 +85,7 @@ export default function editAccount() {
     <View style = {styles.container}>
       <ScrollView>
             <Text style = {styles.item1}>
-              Set Birthdate:
+            
             </Text>
 
             <DatePicker
@@ -119,22 +119,21 @@ export default function editAccount() {
               placeholder="Enter a Note for Other Users to Contact You"
             />     
 
-            <View>
-                <Text style = {styles.text2}>
-                  Gender Preference:
-                </Text>
-                <Picker
+            <View 
+              style = {styles.item2}>
+              <Picker
                   selectedValue={gender}
                   onValueChange={(itemValue, itemIndex) =>
                     onChangeGender(itemValue)
-                }>
-                <Picker.Item label="" value="None" />
-                <Picker.Item label="Male" value="Male" />
-                <Picker.Item label="Female" value="Female" />
-                </Picker>
+                  }>
+                  <Picker.Item label="" value="None" />
+                  <Picker.Item label="Male" value="Male" />
+                  <Picker.Item label="Female" value="Female" />
+              </Picker>
             </View>
 
-            <View style = {styles.item2}>
+            <View 
+              style = {styles.item2}>
               <Picker
                   selectedValue={rightHand}
                   onValueChange={(itemValue, itemIndex) =>
@@ -149,7 +148,7 @@ export default function editAccount() {
             <View style={styles.itemSwitch}>
               <Text style={styles.text}>Use Location: </Text>
               <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                trackColor={{ false: "#767577", true: "#30B731" }}
                 thumbColor={sendLoc ? "#f4f3f4" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={
@@ -159,9 +158,13 @@ export default function editAccount() {
               />
             </View>
 
-            <View style={styles.buttonsContainer}>
-              <Btn onClick={() => Create()} title="Update Info" style={{width: "48%"}} />
-            </View>
+      <Btn
+        style={styles.buttonsContainer}
+        onClick={() => Create()}
+        color="#2145a6"
+        title="Update Information"
+      ></Btn>
+            
 
       </ScrollView>
     </View>
@@ -172,7 +175,7 @@ export default function editAccount() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#558099',
+    backgroundColor: '#CAD1D5',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -181,18 +184,21 @@ const styles = StyleSheet.create({
   },
   text2: {
     fontSize: 24,
-    fontFamily: "Helvetica Neue",
-    color: "blue",
+    fontFamily: "Optima",
+    // backgroundColor: "#30B731",
     textDecorationLine: 'underline'
   },
   buttonsContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#30B731',
+    width: '90%',
+    marginVertical: 10,
   },
   floatingMenuButtonStyle: {
     width: 90,
-    height: 50,
+    height: 10,
     paddingHorizontal: 10,
     paddingVertical: 10,
     position: 'absolute',
@@ -208,6 +214,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     marginVertical: 50,
+    backgroundColor: '#30B731',
   },
   input: {
     height: 40,
@@ -215,6 +222,7 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 2,
     padding: 10,
+    backgroundColor: '#30B731',
   },
   input2: {
     justifyContent: 'flex-end',
@@ -231,19 +239,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  item: {
-    backgroundColor: '#5cb85c',
+  item1: {
+
     padding: 15,
     marginVertical: 8,
     marginHorizontal: 16,
   },
   item2: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#CAD1D5',
     padding: 0,
     borderRadius: 10,
-    borderColor: "#234261",
+    borderColor: "#CAD1D5",
     borderWidth: 1,
-    marginVertical: 10,
+    marginVertical: 4,
+    height:140,
     marginHorizontal: 10,
   },
   quest: {
@@ -254,17 +263,18 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    fontFamily: "Helvetica Neue",
+    fontFamily: "Optima",
     color: "#f0f0f0"
   },
   itemSwitch: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#0F497B',
     padding: 10,
-    borderRadius: 25,
+    borderRadius: 10,
     borderColor: "#234261",
     borderWidth: 1,
     marginVertical: 10,
     marginHorizontal: 10,
     flexDirection: 'row',
+    alignItems: 'center',
   },
 });
