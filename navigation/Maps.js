@@ -155,10 +155,11 @@ export default class Maps extends Component{
           {this.mapMarkers()}
         </MapView>
         
-        <View style={styles.button}>
+  
           <Btn
+            style={styles.button}
             color="#2145a6"
-            title="Filter"
+            title="Add Filters"
             onClick={() => this.props.navigation.navigate('Filters', {
               receivedValue: this.receivedValue,
               range: this.state.range,
@@ -172,7 +173,7 @@ export default class Maps extends Component{
               indoor: this.state.indoor
             })}
           />
-        </View>
+
       </SafeAreaView>
       
     )
@@ -182,7 +183,7 @@ export default class Maps extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#c5d7eb',
+
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -193,10 +194,12 @@ const styles = StyleSheet.create({
     bottom: 0
   },
   button: {
-    position: 'absolute',
-    top: '87%',
-    alignSelf: 'flex-end',
-    padding: 10,
-    width: 100,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#30B731',
+    width: '90%',
+    marginVertical: 80,
+    fontFamily: "Optima",
   }
 });

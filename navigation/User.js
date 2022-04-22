@@ -47,7 +47,7 @@ export default function Answer({navigation}){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#5CB85C',
+      backgroundColor: '#c5d7eb',
       alignItems: 'center',
       justifyContent: 'center',
     },

@@ -129,11 +129,15 @@ export default function Answer({navigation}){
                   value={ans}
                   placeholder="Enter Answer Here"
                 />
-                <Btn
-                  onClick={() => create()}
-                  title="Post Answer"
-                ></Btn>
-            </View>            
+               
+            </View>  
+
+            <Btn
+              style={styles.postAnswerBtn}
+              onClick={() => navigation.navigate('Post')}
+              color="#30B731"
+              title="Post Question"
+            ></Btn> 
 
         </SafeAreaView>
     )
@@ -142,7 +146,7 @@ export default function Answer({navigation}){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#536872',
+      backgroundColor: '#CAD1D5',
       justifyContent: 'center',
     },
     buttonsContainer: {
@@ -151,8 +155,18 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       width: '100%',
+
       marginVertical: 20,
     },
+    postAnswerBtn:{
+      flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#30B731',
+    width: '100%',
+    marginVertical: 10,
+    },
+
     inputContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -160,44 +174,46 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       width: '100%',
       marginVertical: 20,
+      backgroundColor: '#CAD1D5',
     },
     item: {
       backgroundColor: '#ededed',
       padding: 14,
       borderRadius: 15,
-      borderColor: "#558099",
+      borderColor: "#CAD1D5",
       borderWidth: 2,
       marginVertical: 10,
       marginHorizontal: 10,
     },
     mainItem: {
-      backgroundColor: '#375e94',
+      backgroundColor: '#0F497B',
       padding: 14,
       borderRadius: 15,
-      borderColor: "#234261",
+      borderColor: "#CAD1D5",
       borderWidth: 1,
       marginVertical: 10,
       marginHorizontal: 10,
     },
     question: {
       fontSize: 24,
-      fontFamily: "Helvetica Neue",
-      color: "#f9f9f9"
+      fontFamily: "San-Fransisco",
+      color: "#f0f0f0"
     },
     answer: {
       fontSize: 24,
-      fontFamily: "Helvetica Neue",
+      fontFamily: "San-Fransisco",
       color: "#375e94"
     },
     votes: {
       fontSize: 16,
-      fontFamily: "Helvetica Neue",
-      color: "#5CB85C"
+      fontFamily: "San-Fransisco",
+      color: '#30B731',
+    
     },
     desc: {
       fontSize: 14,
-      fontFamily: "Helvetica",
-      color: "#5cb85c"
+      fontFamily: "Optima",
+      color: "#30B731"
     },
     buttonImageIconStyle: {
       padding: 15,

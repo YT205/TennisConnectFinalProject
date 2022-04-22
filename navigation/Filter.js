@@ -77,7 +77,7 @@ export default class Filter extends Component{
           <View style={styles.itemSwitch}>
             <Text style={styles.text}>Lights: </Text>
             <Switch
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              trackColor={{ false: "#767577", true: "#30B731" }}
               thumbColor={this.state.checkLights ? "#f4f3f4" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
               onValueChange={
@@ -90,7 +90,7 @@ export default class Filter extends Component{
           <View style={styles.itemSwitch}>
             <Text style={styles.text}>Indoor: </Text>
             <Switch
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              trackColor={{ false: "#767577", true: "#30B731" }}
               thumbColor={this.state.checkIndoor ? "#f4f3f4" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
               onValueChange={
@@ -103,7 +103,7 @@ export default class Filter extends Component{
           <View style={styles.itemSwitch}>
             <Text style={styles.text}>Proshop: </Text>
             <Switch
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              trackColor={{ false: "#767577", true: "#30B731" }}
               thumbColor={this.state.checkProshop ? "#f4f3f4" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
               onValueChange={
@@ -118,7 +118,7 @@ export default class Filter extends Component{
             <Slider
                 maximumValue={20}
                 minimumValue={1}
-                minimumTrackTintColor="#307ecc"
+                minimumTrackTintColor="#30B731"
                 maximumTrackTintColor="#000000"
                 step={1}
                 value={this.state.sliderRange}
@@ -133,7 +133,7 @@ export default class Filter extends Component{
             <Slider
                 maximumValue={8}
                 minimumValue={1}
-                minimumTrackTintColor="#307ecc"
+                minimumTrackTintColor="#30B731"
                 maximumTrackTintColor="#000000"
                 step={1}
                 value={this.state.sliderCount}
@@ -143,8 +143,8 @@ export default class Filter extends Component{
             />
           </View>
 
-          <View style={styles.buttonsContainer}>
             <Btn
+             style={styles.buttonsContainer}
               onClick={() => {
                 if(
                   this.state.sliderRange !== range || this.state.sliderCount !== numCourts || this.state.checkLights !== lights || 
@@ -158,7 +158,7 @@ export default class Filter extends Component{
               }}
               title="Set Filters"
             />
-          </View>
+
         </ScrollView>
       )
     }
@@ -167,40 +167,45 @@ export default class Filter extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#c5d7eb',
+    backgroundColor: '#CAD1D5',
   },
   buttonsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+   flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#30B731',
     width: '100%',
-    marginVertical: 20,
+    marginVertical: 10,
+    fontFamily: "San-Fransisco",
+    
+
   },
   checkbox: {
     alignSelf: "center",
+
   },
   text: {
     fontSize: 24,
-    fontFamily: "Helvetica Neue",
+    fontFamily: "San-Fransisco",
     color: "#f0f0f0"
   },
   text2: {
     fontSize: 24,
-    fontFamily: "Helvetica",
+    fontFamily: "San-Fransisco",
     color: "#142033"
   },
   item: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#0F497B',
     borderRadius: 10,
     borderColor: "#234261",
     borderWidth: 1,
     marginVertical: 10,
     marginHorizontal: 10,
     flexDirection: 'row',
+    fontFamily: "Optima",
   },
   itemSlider: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#0F497B',
     padding: 10,
     borderRadius: 10,
     borderColor: "#234261",
@@ -209,7 +214,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   itemSwitch: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#0F497B',
     padding: 10,
     borderRadius: 10,
     borderColor: "#234261",

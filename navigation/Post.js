@@ -40,6 +40,7 @@ export default function Post({ navigation }) {
                 placeholder="Enter Desription Here"
             />
             <Btn
+                style={styles.buttonsContainer}
                 onClick={() => Create()}
                 color="#2145a6"
                 title="Post"
@@ -52,33 +53,34 @@ export default function Post({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#c5d7eb',
+    backgroundColor: '#CAD1D5',
     justifyContent: 'center',
   },
   buttonsContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-    marginVertical: 20,
+    backgroundColor: '#30B731',
+    width: '90%',
+    marginVertical: 10,
   },
   inputContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    
     alignItems: 'center',
     width: '100%',
     marginVertical: 20,
   },
   quest: {
     fontSize: 24,
-    fontFamily: "Helvetica Neue",
+    fontFamily: "San-Fransisco",
     color: "#f0f0f0"
   },
   desc: {
     fontSize: 14,
-    fontFamily: "Helvetica",
+    fontFamily: "San-Fransisco",
     color: "#c1c5c9"
   },
   separator: {
