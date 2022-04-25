@@ -6,7 +6,7 @@ import Btn from "../components/Btn"
 import Txt from "../components/TextBox"
 
 class Post {
-  constructor(question, description, id, charArr) {
+  constructor(question, description, id) {
     this.question = question;
     this.description = description;
     this.id = id;
