@@ -22,20 +22,25 @@ class User {
 export default function Match({ navigation }) {
   const [userArr, onChangeArray] = useState([]);
   const [filterdArr, setFilter] = useState([]);
+
   var handFilterR = navigation.getParam('handR');
   var handFilterL = navigation.getParam('handL');
+
+  var genderFilterM = navigation.getParam('GenderM');
+  var genderFilterF = navigation.getParam('GenderF');
+
   var UTRFilter = navigation.getParam('UTR');
-  var genderFilterM = navigation.getParam('male');
-  var genderFilterF = navigation.getParam('female');
-  var rangeFilter = navigation.getParam('range');
 
   useEffect(() => {
-    readUsers();
+    readUsers();  
   },[])
+
+  
 
   useEffect(() => {
     filterPlayers();
-  }, [handFilterR, handFilterL, UTRFilter, genderFilterM, genderFilterF, rangeFilter])
+  }, [handFilterR, handFilterL, UTRFilter, genderFilterM, genderFilterF])
+
 
   async function readUsers() {
     const querySnapshot = await getDocs(collection(db, "Users"));
@@ -58,7 +63,10 @@ export default function Match({ navigation }) {
       }
       onChangeArray(tempQuestionsArray);
     })
+
+    setFilter(tempQuestionsArray)
   }
+
 
   const userConverter = {
     toFirestore: (user) => {
@@ -80,22 +88,56 @@ export default function Match({ navigation }) {
   };
 
 
+
   function filterPlayers(){
+
     var tempArr = [];
+
     userArr.forEach((user) =>{
-      // if((genderFilterM === user.gender || genderFilterF === user.gender) && (handFilterL === user.rightHand || handFilterR === user.rightHand) && 
-      // UTRFilter === user.utr){
-      //   tempArr.push(user);
-      // }
-      if((genderFilterM === user.gender) && (handFilterL === user.rightHand) && 
-      UTRFilter === user.utr){
-        tempArr.push(user);
+      
+      if(handMatch(user.rightHand) && genderMatch(user.gender) && UTRFilter == user.utr){
+        console.log('hand: ' + user.rightHand)
+        tempArr.push(user)
       }
-      tempArr.push(user);
-    })
-    setFilter(tempArr);
+    
+      })
+
+      if(tempArr.length == 0){
+        setFilter(userArr)
+      }
+      else{
+        setFilter(tempArr);
+      }
+
   }
 
+
+  function genderMatch(user){
+    if(user == 'Male'){
+      if(genderFilterM){
+        return true
+      }
+    }
+    if(user == 'Female'){
+      if(genderFilterF){
+        return true
+      }
+    }
+  }
+
+  function handMatch(user){
+    if(user == 'Right'){
+      if(handFilterR){
+        return true
+      }
+    }
+
+    if(user == 'Left'){
+      if(handFilterL){
+        return true
+      }
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>

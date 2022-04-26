@@ -11,12 +11,12 @@ import Slider from '@react-native-community/slider'
 export default function MatchFilter({ navigation }) {
 
   const [rightHand, setHandR] = useState(true);
-  const [leftHand, setHandL] = useState(true);
+  const [leftHand, setHandL] = useState(false);
 
   const [utr, onChangeUTR] = useState(0);
 
   const [male, setMale] = useState(true);
-  const [female, setFemale] = useState(true);
+  const [female, setFemale] = useState(false);
 
   const [range, setRange] = useState(5);
 
@@ -76,8 +76,6 @@ export default function MatchFilter({ navigation }) {
           />
       </View>
 
-      
-
       <View style={styles.item}>
         <Text style={styles.text}>Distance: {range} miles</Text>
           <Slider
@@ -95,7 +93,7 @@ export default function MatchFilter({ navigation }) {
 
       <Btn
         style={styles.mainConatinerStyle}
-        onClick={() => navigation.navigate('Players', {handR: rightHand, handL: leftHand, UTR: utr, male: male, female: female, range: range})} 
+        onClick = {() => navigation.navigate('Players', {handR: rightHand, handL: leftHand, UTR: utr, GenderF: female, GenderM: male})}
         title="Done"
       ></Btn>
 
@@ -111,7 +109,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    fontFamily: "San-Fransisco",
+    // fontFamily: "San-Fransisco",
     color: "#CAD1D5",
     justifyContent: 'center',
     alignItems: 'center',
@@ -119,7 +117,7 @@ const styles = StyleSheet.create({
   },
   text2: {
     fontSize: 24,
-    fontFamily: "San-Fransisco",
+    // fontFamily: "San-Fransisco",
     color: "#30B731",
     justifyContent: 'center',
     alignItems: 'center',
