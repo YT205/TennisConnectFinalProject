@@ -30,16 +30,16 @@ export default function Match({ navigation }) {
   var genderFilterF = navigation.getParam('GenderF');
 
   var UTRFilter = navigation.getParam('UTR');
+  var range = navigation.getParam('range');
+
 
   useEffect(() => {
     readUsers();  
   },[])
 
-  
-
   useEffect(() => {
     filterPlayers();
-  }, [handFilterR, handFilterL, UTRFilter, genderFilterM, genderFilterF])
+  }, [handFilterR, handFilterL, UTRFilter, genderFilterM, genderFilterF, range])
 
 
   async function readUsers() {
@@ -63,10 +63,8 @@ export default function Match({ navigation }) {
       }
       onChangeArray(tempQuestionsArray);
     })
-
     setFilter(tempQuestionsArray)
   }
-
 
   const userConverter = {
     toFirestore: (user) => {
@@ -87,30 +85,20 @@ export default function Match({ navigation }) {
     }
   };
 
-
-
   function filterPlayers(){
-
     var tempArr = [];
-
     userArr.forEach((user) =>{
-      
       if(handMatch(user.rightHand) && genderMatch(user.gender) && UTRFilter == user.utr){
-        console.log('hand: ' + user.rightHand)
         tempArr.push(user)
       }
-    
-      })
-
+    })
       if(tempArr.length == 0){
         setFilter(userArr)
       }
       else{
         setFilter(tempArr);
       }
-
   }
-
 
   function genderMatch(user){
     if(user == 'Male'){
@@ -131,7 +119,6 @@ export default function Match({ navigation }) {
         return true
       }
     }
-
     if(user == 'Left'){
       if(handFilterL){
         return true

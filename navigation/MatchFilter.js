@@ -93,7 +93,7 @@ export default function MatchFilter({ navigation }) {
 
       <Btn
         style={styles.mainConatinerStyle}
-        onClick = {() => navigation.navigate('Players', {handR: rightHand, handL: leftHand, UTR: utr, GenderF: female, GenderM: male})}
+        onClick = {() => navigation.navigate('Players', {handR: rightHand, handL: leftHand, UTR: utr, GenderF: female, GenderM: male, range: range})}
         title="Done"
       ></Btn>
 
