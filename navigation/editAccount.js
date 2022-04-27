@@ -1,3 +1,19 @@
+# bad
+project
+├─D> packagePeer
+└─D> packageA
+     └─P> packageB
+          └─P> packagePeer
+
+# good
+project
+├─D> packagePeer
+└─D> packageA
+     ├─P> packagePeer
+     └─D> packageB
+          └─P> packagePeer
+
+
 import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, Switch, ScrollView } from 'react-native';
 import { React, useEffect, useState } from 'react';
 import Btn from "../components/Btn"
