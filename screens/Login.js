@@ -9,6 +9,7 @@ import 'firebase/compat/firestore';
 const styles = StyleSheet.create({
     view: {
         flex: 1,
+        backgroundColor: "#CAD1D5",
         width: "100%",
         justifyContent: "center",
         alignItems: "center"
@@ -51,7 +52,7 @@ export default function Loginscreen({ navigation }) {
         <TextBox placeholder="Password" onChangeText={text => handleChange(text, "pwd")} secureTextEntry={true} />
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "92%", }}>
             <Btn onClick={() => Login()} title="Login" style={{ width: "48%" }} />
-            <Btn onClick={() => navigation.navigate("Sign Up")} title="Sign Up" style={{ width: "48%", backgroundColor: "#344869" }} />
+            <Btn onClick={() => navigation.navigate("Sign Up")} title="Sign Up" style={{ width: "48%", color: "black" }} />
         </View>
     </View>
 }

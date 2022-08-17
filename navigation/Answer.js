@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native';
 import { React, useEffect, useState } from 'react';
-import { db } from "../Firebase";
+import { db } from "./Firebase";
 import { setDoc, collection, doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'
 import Btn from "../components/Btn"
@@ -129,14 +129,13 @@ export default function Answer({navigation}){
                   value={ans}
                   placeholder="Enter Answer Here"
                 />
-               
             </View>  
 
             <Btn
               style={styles.postAnswerBtn}
-              onClick={() => navigation.navigate('Post')}
+              onClick={() => create()}
               color="#30B731"
-              title="Post Question"
+              title="Post Answer"
             ></Btn> 
 
         </SafeAreaView>
@@ -196,19 +195,18 @@ const styles = StyleSheet.create({
     },
     question: {
       fontSize: 24,
-      fontFamily: "San-Fransisco",
+      fontFamily: "Helvetica",
       color: "#f0f0f0"
     },
     answer: {
       fontSize: 24,
-      fontFamily: "San-Fransisco",
+      fontFamily: "Helvetica",
       color: "#375e94"
     },
     votes: {
       fontSize: 16,
-      fontFamily: "San-Fransisco",
+      fontFamily: "Helvetica",
       color: '#30B731',
-    
     },
     desc: {
       fontSize: 14,

@@ -201,11 +201,10 @@ export default class Maps extends Component{
           {this.mapMarkers()}
         </MapView>
         
-  
           <Btn
-            style={styles.button}
+            style={styles.floatingMenuButtonStyle}
             color="#2145a6"
-            title="Add Filters"
+            title="Filter"
             onClick={() => this.props.navigation.navigate('Filters', {
               receivedValue: this.receivedValue,
               range: this.state.range,
@@ -229,7 +228,6 @@ export default class Maps extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -247,5 +245,14 @@ const styles = StyleSheet.create({
     width: '90%',
     marginVertical: 80,
     fontFamily: "Optima",
+  },
+  floatingMenuButtonStyle: {
+    width: 90,
+    height: 50,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    position: 'absolute',
+    bottom: 10,
+    right: 10
   }
 });

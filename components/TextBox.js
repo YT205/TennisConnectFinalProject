@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
         width: "100%",
         borderColor: "#0B3270",
         borderWidth: 2,
-        paddingLeft: 15
+        paddingLeft: 15,
+        color: "#070130"
     }
-
 })
 
 export default function Loginscreen(props){

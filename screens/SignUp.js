@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     view: {
         flex: 1,
         width: "100%",
+        backgroundColor: "#CAD1D5",
         justifyContent: "center",
         alignItems: "center"
     }
@@ -28,7 +29,6 @@ export default function SignUpScreen({ navigation }) {
             return {
                 ...prev,
                 [eventName]: text
-            
             }
         })
     }
