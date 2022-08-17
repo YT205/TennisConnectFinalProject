@@ -1,6 +1,9 @@
-import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, ScrollView } from 'react-native';
-import { React, useEffect, useState } from 'react';
-import { db } from "../Firebase";
+import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, ScrollView, RefreshControl, SectionList } from 'react-native';
+import { React, useEffect, useState, useCallback } from 'react';
+import { db } from "./Firebase";
+import { getAuth } from 'firebase/auth'
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 import { setDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import Btn from '../components/Btn';
 
@@ -21,52 +24,93 @@ class User {
 
 export default function Match({ navigation }) {
   const [userArr, onChangeArray] = useState([]);
-  const [filterdArr, setFilter] = useState([]);
+  const [filteredArr, onChangeFArray] = useState([]);
 
-  var handFilterR = navigation.getParam('handR');
-  var handFilterL = navigation.getParam('handL');
+  const [userLat, setLat] = useState(null);
+  const [userLon, setLong] = useState(null);
 
-  var genderFilterM = navigation.getParam('GenderM');
-  var genderFilterF = navigation.getParam('GenderF');
+  const [refreshing, setRefreshing] = useState(false);
 
-  var UTRFilter = navigation.getParam('UTR');
+  const [handFilterR, setHandR] = useState(true);
+  const [handFilterL, setHandL] = useState(true);
+  const [genderFilterM, setGenderM] = useState(true);
+  const [genderFilterF, setGenderF] = useState(true);
+  const [UTRFilterMin, setUTRMin] = useState(0);
+  const [UTRFilterMax, setUTRMax] = useState(17);
+  const [rangeFilter, setRange] = useState(5);
+
+  var handR = navigation.getParam('handR');
+  var handL = navigation.getParam('handL');
+  var genderM = navigation.getParam('GenderM');
+  var genderF = navigation.getParam('GenderF');
+  var UTRMin = navigation.getParam('UTRMin');
+  var UTRMax = navigation.getParam('UTRMax');
+  var range = navigation.getParam('range');
+
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   useEffect(() => {
-    readUsers();  
-  },[])
+    setConst();
+  }, [handR, handL, genderM, genderF, UTRMax, UTRMin])
 
-  
+  function setConst(){
+    setHandL(handL);
+    setHandR(handR);
+    setGenderF(genderF);
+    setGenderM(genderM);
+    setUTRMin(UTRMin);
+    setUTRMax(UTRMax);
+    setRange(range);
+  }
 
   useEffect(() => {
-    filterPlayers();
-  }, [handFilterR, handFilterL, UTRFilter, genderFilterM, genderFilterF])
+    clearUsers();
+  }, [handFilterR, handFilterL, genderFilterM, genderFilterF, UTRFilterMax, UTRFilterMin, rangeFilter])
 
+  useEffect(() => {
+    readUsers();
+  }, [filteredArr])
 
-  async function readUsers() {
+  async function getCoords(){
+    const uid = user.uid;
+    const ref = doc(db, "Users", uid).withConverter(userConverter);
+    const docSnap = await getDoc(ref);
+    if (docSnap.exists()) {
+      const user = docSnap.data();
+      setLat(user.latitude);
+      setLong(user.longitude);
+    } else {
+      console.log("No such document!");
+    }
+  }
+
+  async function clearUsers() {
     const querySnapshot = await getDocs(collection(db, "Users"));
     const tempNames = []
     querySnapshot.forEach((doc) => {
       tempNames.push(doc.id);
     });
+    onChangeFArray(tempNames);
+  }
 
+  async function readUsers() {
     var tempQuestionsArray = []
-
-    tempNames.forEach(async (name) => {
+    filteredArr.forEach(async (name) => {
       const ref = doc(db, "Users", name).withConverter(userConverter);
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
         const user = docSnap.data();
-        tempQuestionsArray.push({uid: user.uid, utr: user.utr, age: user.age, name: user.name, gender: user.gender, 
-          contact: user.contact, email: user.email, rightHand: user.rightHand});
-      } else {
+        if(handMatch(user.rightHand) && genderMatch(user.gender) && UTRFilterMax >= user.utr && UTRFilterMin <= user.utr){
+          tempQuestionsArray.push({uid: user.uid, utr: user.utr, age: user.age, name: user.name, gender: user.gender, 
+            contact: user.contact, email: user.email, hand: user.rightHand});
+        }
+      }else {
         console.log("No such document!");
       }
       onChangeArray(tempQuestionsArray);
     })
-
-    setFilter(tempQuestionsArray)
   }
-
 
   const userConverter = {
     toFirestore: (user) => {
@@ -79,85 +123,93 @@ export default function Match({ navigation }) {
         contact: user.contact,
         email: user.email,
         rightHand: user.rightHand,
+        latitude: user.latitude,
+        longitude: user.longitude
       };
     },
     fromFirestore: (snapshot, options) => {
       const data = snapshot.data(options);
-      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.email, data.rightHand, data.latitude, data.longitude);
+      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.email, data.rightHand);
     }
   };
 
+  function checkDistance(lati1, long1){
+    var lat1 = lati1 / 57.29577951;
+    var lon1 = long1 / 57.29577951;
+    var lat2 = userLat / 57.29577951;
+    var lon2 = userLon / 57.29577951;
 
+    var dlon = lon2 - lon1;
+    var dlat = lat2 - lat1;
+    dlat = Math.abs(dlat);
+    dlon = Math.abs(dlon);
 
-  function filterPlayers(){
+    var a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2),2);
+    var c = 2 * Math.asin(Math.sqrt(a));
+    var r = 3956;
+    var d = c * r;
+    d = d * 10;
+    d = Math.round(d);
+    d = d / 10;
 
-    var tempArr = [];
-
-    userArr.forEach((user) =>{
-      
-      if(handMatch(user.rightHand) && genderMatch(user.gender) && UTRFilter == user.utr){
-        console.log('hand: ' + user.rightHand)
-        tempArr.push(user)
-      }
-    
-      })
-
-      if(tempArr.length == 0){
-        setFilter(userArr)
-      }
-      else{
-        setFilter(tempArr);
-      }
-
+    return d;
   }
 
-
   function genderMatch(user){
-    if(user == 'Male'){
-      if(genderFilterM){
-        return true
-      }
+    if(user == 'Male' && genderFilterM){
+      return true;
     }
-    if(user == 'Female'){
-      if(genderFilterF){
-        return true
-      }
+    else if(user == 'Female' && genderFilterF){
+      return true;
+    }
+    else{
+      return false;
     }
   }
 
   function handMatch(user){
-    if(user == 'Right'){
-      if(handFilterR){
-        return true
-      }
+    if(user == 'Right' && handFilterR){
+      return true;
     }
-
-    if(user == 'Left'){
-      if(handFilterL){
-        return true
-      }
+    if(user == 'Left' && handFilterL){
+      return true;
     }
+    return false;
   }
+
+  // const onRefresh = useCallback(async () => {
+  //   setRefreshing(true);
+  //   readUsers();
+  // }, [refreshing]);
 
   return (
     <SafeAreaView style={styles.container}>
     <FlatList
         keyExtractor={item => item.uid}
-        data = {filterdArr}
+        data = {userArr}
         renderItem={({item}) => (
           <View style={styles.items}>
             <TouchableOpacity onPress={() => navigation.navigate('Details', item)}>
               <Text style={styles.name}>{item.name}</Text>
               <Text style={styles.desc}>Age: {item.age}</Text>
               <Text style={styles.desc}>UTR: {item.utr}</Text>
-              <Text style={styles.desc}>Email: {item.email}</Text>
+              <Text style={styles.desc}>Gender: {item.gender}</Text>
+              <Text style={styles.desc}>Hand: {item.hand}</Text>
             </TouchableOpacity>
           </View>
         )}
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        // }
       />
 
       <View style = {styles.mainConatinerStyle}>
-        <Btn onClick={() => navigation.navigate('Filter')} title="Filter" style={styles.floatingMenuButtonStyle}/>
+        <Btn onClick={() => 
+          navigation.navigate('Filter', {handFilterL: handFilterL, handFilterR: handFilterR, 
+            genderFilterF: genderFilterF, genderFilterM: genderFilterM, 
+            UTRFilterMin: UTRFilterMin, UTRFilterMax: UTRFilterMax, rangeFilter: rangeFilter})} 
+          title="Filter" 
+          style={styles.floatingMenuButtonStyle}/>
       </View>
     </SafeAreaView>
   );
@@ -166,10 +218,9 @@ export default function Match({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#c5d7eb',
+    backgroundColor: '#CAD1D5',
     justifyContent: 'center',
   },
-  
   list: {
     flexDirection: "column",
     marginVertical: 20,
@@ -178,7 +229,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   items: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#0F497B',
     padding: 14,
     borderRadius: 15,
     borderColor: "#234261",
@@ -194,9 +245,8 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 16,
     fontFamily: "Helvetica",
-    color: "#c1c5c9"
+    color: "#b8bab9"
   },
-  
   separator: {
     marginVertical: 8,
     borderBottomColor: '#737373',

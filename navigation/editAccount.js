@@ -1,24 +1,7 @@
-# bad
-project
-├─D> packagePeer
-└─D> packageA
-     └─P> packageB
-          └─P> packagePeer
-
-# good
-project
-├─D> packagePeer
-└─D> packageA
-     ├─P> packagePeer
-     └─D> packageB
-          └─P> packagePeer
-
-
 import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, Switch, ScrollView } from 'react-native';
 import { React, useEffect, useState } from 'react';
 import Btn from "../components/Btn"
 import Txt from "../components/TextBox"
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { getAuth } from 'firebase/auth'
@@ -256,7 +239,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   item1: {
-
     padding: 15,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -279,7 +261,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    fontFamily: "Optima",
     color: "#f0f0f0"
   },
   itemSwitch: {

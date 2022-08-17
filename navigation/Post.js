@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
 import { React, useEffect, useState } from 'react';
-import { db } from "../Firebase";
+import { db } from "./Firebase";
 import { setDoc, collection, doc, getDocs, getDoc } from 'firebase/firestore';
 import Btn from "../components/Btn"
 import Txt from "../components/TextBox"

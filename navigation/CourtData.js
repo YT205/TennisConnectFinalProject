@@ -102,7 +102,7 @@ export default class Filter extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#c5d7eb',
+    backgroundColor: '#CAD1D5',
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     color: "#142033"
   },
   item: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#0F497B',
     borderRadius: 10,
     borderColor: "#234261",
     borderWidth: 1,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   itemSlider: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#0F497B',
     padding: 10,
     borderRadius: 10,
     borderColor: "#234261",
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   itemSwitch: {
-    backgroundColor: '#375e94',
+    backgroundColor: '#0F497B',
     padding: 10,
     borderRadius: 10,
     borderColor: "#234261",

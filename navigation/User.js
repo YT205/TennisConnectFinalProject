@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
 import { React, useEffect, useState } from 'react';
-import { db } from "../Firebase";
 import { setDoc, collection, doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'
 
@@ -8,37 +7,22 @@ export default function Answer({navigation}){
     const Separator = () => (
       <View style={styles.separator} />
     );
-
-    // function checkHand(item){
-    //   if(!item){
-    //     return(
-    //       <Text style = {styles.desc}>
-    //         Hand Preference is: Left
-    //       </Text>
-    //     );
-    //   }
-    //   else if(item){
-    //     return(
-    //       <Text style = {styles.desc}>
-    //         Hand Preference is: Right
-    //       </Text>
-    //     );
-    //   }
-    // }
   
     return(
       <SafeAreaView style={styles.container}>
-        <View style={styles.mainItem}>
-          <Text style={styles.name}>{navigation.getParam('name')}</Text>
+        {/* <View style={styles.mainItem}>
+          
         </View>
-        <Separator/>
+        <Separator/> */}
         <View style={styles.item}>
+          <Text style={styles.name}>{navigation.getParam('name')}</Text>
+          <Text style={styles.name}></Text>
           <Text style={styles.desc}>UTR: {navigation.getParam('utr')}</Text>
           <Text style={styles.desc}>Age: {navigation.getParam('age')}</Text>
           <Text style={styles.desc}>Gender: {navigation.getParam('gender')}</Text>
           <Text style={styles.desc}>Contact Info: {navigation.getParam('contact')}</Text>
           <Text style={styles.desc}>Email: {navigation.getParam('email')}</Text>
-          <Text style={styles.desc}>Hand: {navigation.getParam('rightHand')}</Text>
+          <Text style={styles.desc}>Hand: {navigation.getParam('hand')}</Text>
         </View> 
       </SafeAreaView>
     )
@@ -47,7 +31,7 @@ export default function Answer({navigation}){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#c5d7eb',
+      backgroundColor: '#CAD1D5',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -62,8 +46,8 @@ const styles = StyleSheet.create({
     },
     item: {
       backgroundColor: '#375e94',
-      padding: 14,
-      borderRadius: 15,
+      padding: 20,
+      borderRadius: 5,
       borderColor: "#234261",
       borderWidth: 1,
       marginVertical: 10,
@@ -72,7 +56,7 @@ const styles = StyleSheet.create({
     name: {
       fontSize: 32,
       fontFamily: "Helvetica Neue",
-      color: "#e6e6e6"
+      color: "white"
     },
     desc: {
       fontSize: 24,

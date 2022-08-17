@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableOpacity, FlatList, RefreshControl } from 'react-native';
 import { React, useEffect, useState, useCallback } from 'react';
-import { db } from "../Firebase";
+import { db } from "./Firebase";
 import { setDoc, collection, doc, getDocs, getDoc } from 'firebase/firestore';
 import Btn from "../components/Btn"
 import Txt from "../components/TextBox"
@@ -84,7 +84,6 @@ export default function Forum({ navigation }) {
         onChangeText={setSearch}
         value={search}
         placeholder="Enter Search Here"
-
       />
       <FlatList
         keyExtractor={item => item.i}
@@ -137,13 +136,13 @@ const styles = StyleSheet.create({
   },
   quest: {
     fontSize: 24,
-    fontFamily: "San-Fransisco",
+    fontFamily: "Helvetica",
     color: "#f0f0f0"
   },
   desc: {
     fontSize: 14,
-    fontFamily: "San-Fransisco",
-    color: "#30B731"
+    fontFamily: "Helvetica",
+    color: "#b8bab9"
   },
   separator: {
     marginVertical: 8,
