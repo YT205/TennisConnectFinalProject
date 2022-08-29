@@ -195,17 +195,17 @@ const styles = StyleSheet.create({
     },
     question: {
       fontSize: 24,
-      fontFamily: "Helvetica",
+      fontFamily: "",
       color: "#f0f0f0"
     },
     answer: {
       fontSize: 24,
-      fontFamily: "Helvetica",
+      fontFamily: "",
       color: "#375e94"
     },
     votes: {
       fontSize: 16,
-      fontFamily: "Helvetica",
+      fontFamily: "",
       color: '#30B731',
     },
     desc: {

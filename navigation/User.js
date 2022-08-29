@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
     },
     name: {
       fontSize: 32,
-      fontFamily: "Helvetica Neue",
+      fontFamily: "",
       color: "white"
     },
     desc: {
       fontSize: 24,
-      fontFamily: "Helvetica Neue",
+      fontFamily: "",
       color: "#e6e6e6"
     },
     separator: {

@@ -186,12 +186,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    fontFamily: "Helvetica",
+    fontFamily: "",
     color: "#f0f0f0"
   },
   text2: {
     fontSize: 24,
-    fontFamily: "Helvetica",
+    fontFamily: "",
     color: "#142033"
   },
   item: {

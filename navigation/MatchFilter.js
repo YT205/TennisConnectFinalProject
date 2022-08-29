@@ -108,7 +108,7 @@ export default function MatchFilter({ navigation }) {
       <View style={styles.item}>
         <Text style={styles.text}>Distance: {range} miles</Text>
           <Slider
-            maximumValue={20}
+            maximumValue={50}
             minimumValue={1}
             minimumTrackTintColor="#30B731"
             maximumTrackTintColor="#000000"

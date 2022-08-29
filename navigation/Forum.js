@@ -136,12 +136,12 @@ const styles = StyleSheet.create({
   },
   quest: {
     fontSize: 24,
-    fontFamily: "Helvetica",
+    fontFamily: "",
     color: "#f0f0f0"
   },
   desc: {
     fontSize: 14,
-    fontFamily: "Helvetica",
+    fontFamily: "",
     color: "#b8bab9"
   },
   separator: {

@@ -6,6 +6,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { setDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import Btn from '../components/Btn';
+import 'react-native-gesture-handler';
 
 class User {
   constructor(uid, utr, age, name, gender, contact, email, rightHand, latitude, longitude) {
@@ -23,8 +24,8 @@ class User {
 }
 
 export default function Match({ navigation }) {
-  const [userArr, onChangeArray] = useState([]);
-  const [filteredArr, onChangeFArray] = useState([]);
+  const [userArr, onChangeArray] = useState([])
+  const [filteredArr, onChangeFArray] = useState([])
 
   const [userLat, setLat] = useState(null);
   const [userLon, setLong] = useState(null);
@@ -52,7 +53,7 @@ export default function Match({ navigation }) {
 
   useEffect(() => {
     setConst();
-  }, [handR, handL, genderM, genderF, UTRMax, UTRMin])
+  }, [handR, handL, genderM, genderF, UTRMax, UTRMin, range])
 
   function setConst(){
     setHandL(handL);
@@ -70,7 +71,13 @@ export default function Match({ navigation }) {
 
   useEffect(() => {
     readUsers();
+    getCoords();
   }, [filteredArr])
+
+  useEffect(() => {
+    console.log("My Lat: " + userLat);
+    console.log("My Lon: " + userLon);
+  }, [userLat, userLon])
 
   async function getCoords(){
     const uid = user.uid;
@@ -80,7 +87,7 @@ export default function Match({ navigation }) {
       const user = docSnap.data();
       setLat(user.latitude);
       setLong(user.longitude);
-    } else {
+    }else {
       console.log("No such document!");
     }
   }
@@ -101,9 +108,10 @@ export default function Match({ navigation }) {
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
         const user = docSnap.data();
-        if(handMatch(user.rightHand) && genderMatch(user.gender) && UTRFilterMax >= user.utr && UTRFilterMin <= user.utr){
+        if(handMatch(user.rightHand) && genderMatch(user.gender) && UTRFilterMax >= user.utr && UTRFilterMin <= user.utr && 
+        checkDistance(user.latitude, user.longitude) <= rangeFilter){
           tempQuestionsArray.push({uid: user.uid, utr: user.utr, age: user.age, name: user.name, gender: user.gender, 
-            contact: user.contact, email: user.email, hand: user.rightHand});
+            contact: user.contact, email: user.email, hand: user.rightHand, latitude: user.latitude, longitude: user.longitude});
         }
       }else {
         console.log("No such document!");
@@ -129,7 +137,7 @@ export default function Match({ navigation }) {
     },
     fromFirestore: (snapshot, options) => {
       const data = snapshot.data(options);
-      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.email, data.rightHand);
+      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.email, data.rightHand, data.latitude, data.longitude);
     }
   };
 
@@ -239,12 +247,12 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    fontFamily: "Helvetica Neue",
+    fontFamily: "",
     color: "white"
   },
   desc: {
     fontSize: 16,
-    fontFamily: "Helvetica",
+    fontFamily: "",
     color: "#b8bab9"
   },
   separator: {
