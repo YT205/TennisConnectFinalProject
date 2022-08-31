@@ -23,9 +23,6 @@ export default function editAccount() {
     const [lat, onChangeLat] = useState(null);
     const [lon, onChangeLon] = useState(null);
     const [sendLoc, onChangeSend] = useState(false);
-    const [selectedDate, setSelectedDate] = useState();
-    const [selectedMonth, setSelectedMonth] = useState();
-    const [selectedYear, setSelectedYear] = useState();
 
     const auth = getAuth();
     const user = auth.currentUser;
@@ -43,7 +40,6 @@ export default function editAccount() {
         const currentMonth = new Date().getMonth() + 1;
         const currentYear = new Date().getFullYear();
 
-        
         // console.log(selectedDate.getFullYear())
 
         console.log(currentDay + " " + currentMonth + " " + currentYear)
@@ -89,59 +85,12 @@ export default function editAccount() {
       onChangeLon(coords.longitude);
     }
 
-  var optionsDate =["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16",
-    "17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
-  var optionsMonth =["1","2","3","4","5","6","7","8","9","10","11","12"];
-  // function createYears(){
-  //   const year = new Date().getFullYear();
-  //   var tempArray = [];
-  //   for(x = 1950; x <= year; x++){
-  //     tempArray.push(x);
-  //   }
-  //   setYears(tempArray);
-  // }
-  // yearPicker = () => {
-  //   return  => 
-  //     <Picker.item
-  //       label={item} value={index} key={index}
-  //     />
-  //   )
-  // }
 
   return (
     <View style = {styles.container}>
       <ScrollView>
-            <Text style = {styles.item1}>
-            
-            </Text>
-
             <View 
               style = {styles.item2}>
-              <Picker
-                  selectedValue={selectedDate}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setSelectedDate(itemValue)
-                  }>
-                  {optionsDate.map((item, index) => {
-                    return (<Picker.Item label={item} value={index} key={index}/>) 
-                  })}
-              </Picker>
-              <Picker
-                  selectedValue={selectedMonth}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setSelectedMonth(itemValue)
-                  }>
-                  {optionsMonth.map((item, index) => {
-                    return (<Picker.Item label={item} value={index} key={index}/>) 
-                  })}
-              </Picker>
-              <Picker
-                  selectedValue={selectedYear}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setSelectedYear(itemValue)
-                  }>
-                  {}
-              </Picker>
             </View>
             
             <Txt
