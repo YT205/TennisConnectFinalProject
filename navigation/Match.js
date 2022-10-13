@@ -9,7 +9,7 @@ import Btn from '../components/Btn';
 import 'react-native-gesture-handler';
 
 class User {
-  constructor(uid, utr, age, name, gender, contact, email, rightHand, latitude, longitude) {
+  constructor(uid, utr, age, name, gender, contact, email, rightHand, latitude, longitude, friends, requests) {
     this.uid = uid;
     this.utr = utr;
     this.age = age;
@@ -20,6 +20,8 @@ class User {
     this.longitude = longitude;
     this.email = email;
     this.rightHand = rightHand;
+    this.friends = friends;
+    this.requests = requests;
   }
 }
 
@@ -74,11 +76,6 @@ export default function Match({ navigation }) {
     getCoords();
   }, [filteredArr])
 
-  useEffect(() => {
-    console.log("My Lat: " + userLat);
-    console.log("My Lon: " + userLon);
-  }, [userLat, userLon])
-
   async function getCoords(){
     const uid = user.uid;
     const ref = doc(db, "Users", uid).withConverter(userConverter);
@@ -111,7 +108,8 @@ export default function Match({ navigation }) {
         if(handMatch(user.rightHand) && genderMatch(user.gender) && UTRFilterMax >= user.utr && UTRFilterMin <= user.utr && 
         checkDistance(user.latitude, user.longitude) <= rangeFilter){
           tempQuestionsArray.push({uid: user.uid, utr: user.utr, age: user.age, name: user.name, gender: user.gender, 
-            contact: user.contact, email: user.email, hand: user.rightHand, latitude: user.latitude, longitude: user.longitude});
+            contact: user.contact, email: user.email, hand: user.rightHand, latitude: user.latitude, longitude: user.longitude, 
+            friends: user.friends, requests: user.requests});
         }
       }else {
         console.log("No such document!");
@@ -132,12 +130,15 @@ export default function Match({ navigation }) {
         email: user.email,
         rightHand: user.rightHand,
         latitude: user.latitude,
-        longitude: user.longitude
+        longitude: user.longitude,
+        friends: user.friends,
+        requests: user.requests,
       };
     },
     fromFirestore: (snapshot, options) => {
       const data = snapshot.data(options);
-      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.email, data.rightHand, data.latitude, data.longitude);
+      return new User(data.uid, data.utr, data.age, data.name, data.gender, data.contact, data.email, data.rightHand, 
+        data.latitude, data.longitude, data.friends, data.requests);
     }
   };
 
@@ -247,12 +248,10 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    fontFamily: "",
     color: "white"
   },
   desc: {
     fontSize: 16,
-    fontFamily: "",
     color: "#b8bab9"
   },
   separator: {

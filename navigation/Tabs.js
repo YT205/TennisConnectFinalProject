@@ -49,7 +49,7 @@ const Tabs = () => {
 
             <Tab.Screen name="Maps" component={MapsHandler} options={{
                 tabBarIcon: ({focused}) => (
-                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', top: 0}}>
                         <Image
                             source={require('../assets/maps.png')}
                             resizeMode='contain'
@@ -69,7 +69,7 @@ const Tabs = () => {
 
             <Tab.Screen name="Match" component={MatchHandler} options={{
                 tabBarIcon: ({focused}) => (
-                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', top: 0}}>
                         <Image
                             source={require('../assets/match.png')}
                             resizeMode='contain'
@@ -89,7 +89,7 @@ const Tabs = () => {
 
             <Tab.Screen name="Forum" component={ForumHandler} options={{
                 tabBarIcon: ({focused}) => (
-                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', top: 0}}>
                         <Image
                             source={require('../assets/forum.png')}
                             resizeMode='contain'
@@ -109,7 +109,7 @@ const Tabs = () => {
 
             <Tab.Screen name="Account" component={HomeHandler} options={{
                 tabBarIcon: ({focused}) => (
-                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', top: 0}}>
                         <Image
                             source={require('../assets/account.png')}
                             resizeMode='contain'

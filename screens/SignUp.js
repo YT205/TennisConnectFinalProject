@@ -52,9 +52,9 @@ export default function SignUpScreen({ navigation }) {
     return <View style={styles.view}>
         <Text style={{ fontSize: 34, fontWeight: "800", marginBottom: 90 }}>Tennis Connect</Text>
         <Text style={{ fontSize: 34, fontWeight: "400", marginBottom: 20 }}>Sign Up</Text>
-        <TextBox placeholder="Email Address" onChangeText={text => handleChange(text, "email")} />
-        <TextBox placeholder="Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd")}/>
-        <TextBox placeholder="Confirm Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd2")}/>
+        <TextBox placeholder="Email Address" onChangeText={text => handleChange(text, "email")} placeholderTextColor={"black"}/>
+        <TextBox placeholder="Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd")} placeholderTextColor={"black"}/>
+        <TextBox placeholder="Confirm Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd2")} placeholderTextColor={"black"}/>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "92%", }}>
             <Btn onClick={() => SignUp()} title="Sign Up" style={{ width: "48%" }} />
             <Btn onClick={() => navigation.replace("Login")} title="Login" style={{ width: "48%", backgroundColor: "#344869" }} />

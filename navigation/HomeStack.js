@@ -1,8 +1,9 @@
-import { createStackNavigator } from "react-navigation-stack"
+import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import Home from "./Home"
-import editAccount from "./editAccount"
-
+import Home from "./Home";
+import editAccount from "./editAccount";
+import requests from "./Requests";
+import friends from "./Friends";
 
 const screens = {
     Account: {
@@ -10,6 +11,12 @@ const screens = {
     },
     Edit: {
         screen: editAccount
+    },
+    Requests: {
+        screen: requests
+    },
+    Friends: {
+        screen: friends
     }
 }
 

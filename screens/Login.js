@@ -46,10 +46,21 @@ export default function Loginscreen({ navigation }) {
     }
 
     return <View style={styles.view}>
-         <Text style={{ fontSize: 34, fontWeight: "800", marginBottom: 90 }}>Tennis Connect</Text>
-        <Text style={{ fontSize: 34, fontWeight: "400", marginBottom: 20 }}>Login</Text>
-        <TextBox placeholder="Email Address" onChangeText={text => handleChange(text, "email")} />
-        <TextBox placeholder="Password" onChangeText={text => handleChange(text, "pwd")} secureTextEntry={true} />
+        <Text 
+            style={{ fontSize: 34, fontWeight: "800", marginBottom: 90 }}>Tennis Connect</Text>
+        <Text 
+            style={{ fontSize: 34, fontWeight: "400", marginBottom: 20 }}>Login</Text>
+        <TextBox 
+            placeholder="Email Address" 
+            onChangeText={text => handleChange(text, "email")} 
+            placeholderTextColor={"black"}
+        />
+        <TextBox 
+            placeholder="Password" 
+            onChangeText={text => handleChange(text, "pwd")} 
+            secureTextEntry={true} 
+            placeholderTextColor={"black"}
+        />
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "92%", }}>
             <Btn onClick={() => Login()} title="Login" style={{ width: "48%" }} />
             <Btn onClick={() => navigation.navigate("Sign Up")} title="Sign Up" style={{ width: "48%", color: "black" }} />

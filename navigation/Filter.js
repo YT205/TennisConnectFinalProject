@@ -22,7 +22,6 @@ export default class Filter extends Component{
     }
 
     render(){
-      
       const receivedValue = this.props.navigation.getParam('receivedValue', () => {});
       const range = this.props.navigation.getParam('range', () => {});
       const numCourts = this.props.navigation.getParam('numCourts', () => {});
@@ -144,7 +143,7 @@ export default class Filter extends Component{
           </View>
 
             <Btn
-             style={styles.buttonsContainer}
+              style={styles.buttonsContainer}
               onClick={() => {
                 if(
                   this.state.sliderRange !== range || this.state.sliderCount !== numCourts || this.state.checkLights !== lights || 
@@ -177,8 +176,6 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 10,
     fontFamily: "San-Fransisco",
-    
-
   },
   checkbox: {
     alignSelf: "center",

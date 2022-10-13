@@ -14,6 +14,8 @@ export default function Home({ navigation }) {
         <Text style={{fontSize: 34, fontWeight: "800", marginBottom: 20}}></Text>
         <Btn title="Log Out" onClick={() => firebase.auth().signOut()} />
         <Btn title="Update Account Info" onClick={() => navigation.navigate('Edit')} />
+        <Btn title="Friends" onClick={() => navigation.navigate('Friends')} />
+        <Btn title="Requests" onClick={() => navigation.navigate('Requests')} />
       </SafeAreaView>
     );
   

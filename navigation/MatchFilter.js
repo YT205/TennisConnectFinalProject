@@ -39,7 +39,7 @@ export default function MatchFilter({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
           <View style={styles.item}>
             <Checkbox.Item
               status={rightHand ? 'checked' : 'unchecked'}
@@ -127,7 +127,7 @@ export default function MatchFilter({ navigation }) {
         title="Done"
       ></Btn>
 
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#CAD1D5',
-    justifyContent: 'center',
   },
   text: {
     fontSize: 24,

@@ -9,7 +9,6 @@ import {
   Switch,
   ScrollView,
   Button,
-  Picker,
 } from "react-native";
 import { React, useEffect, useState } from "react";
 import Txt from "../components/TextBox";
@@ -21,8 +20,9 @@ import { setDoc, collection, doc, getDocs, getDoc } from "firebase/firestore";
 import { db } from "./Firebase";
 import * as Location from "expo-location";
 import { Checkbox } from "react-native-paper";
-// import { Picker } from "@react-native-picker/picker";
 import UpdateButton from "react-native-really-awesome-button/src/themes/blue";
+import { Picker } from "@react-native-picker/picker"
+import { TextInputMask } from 'react-native-masked-text';
 
 export default function editAccount() {
   const [utr, onChangeUTR] = useState(null);
@@ -35,6 +35,7 @@ export default function editAccount() {
   const [lat, onChangeLat] = useState(null);
   const [lon, onChangeLon] = useState(null);
   const [sendLoc, onChangeSend] = useState(false);
+  const [bday, onChangeBday] = useState("");
   
   const auth = getAuth();
   const user = auth.currentUser;
@@ -46,18 +47,66 @@ export default function editAccount() {
     getLocation();
   }, []);
 
-
   async function Create() {
+    console.log("create")
     const uid = user.uid;
+
+    if(bday.length < 10){
+      alert("Enter a valid birthdate");
+      return;
+    }
+
+    var today = new Date();
+    var birthDate = Number(bday.substring(3, 5));
+    var birthMonth = Number(bday.substring(0, 2));
+    var birthYear = Number(bday.substring(6, 10));
+
+    if(birthYear > today.getFullYear()){
+      alert("Please Enter a Valid Year");
+      return;
+    }
+    else if(birthMonth > 12){
+      alert("Please Enter a Valid Month");
+      return;
+    }
+    else if(birthDate > 31){
+      alert("Please Enter a Valid Day");
+      return;
+    }
+
+    var age = today.getFullYear() - birthYear;
+    var m = today.getMonth() - birthMonth;
+    if (m < 0 || (m === 0 && today.getDate() < birthDate)) 
+    {
+      age--;
+    }
+
+    if(age < 0){
+      alert("Please Enter a Valid Age");
+    }
+    else if(age < 13){
+      alert("You must be 13 or above to use Tennis Connect");
+    }
+    else if(age > 100){
+      alert("Please enter a valid age");
+    }
+
     if (!utr) {
       alert("Please Enter a UTR");
-    } else if (!contact) {
-      alert("Please Enter a contact");
-    } else if (!gender) {
+    } 
+    else if (!contact) {
+      alert("Please Enter a Phone Number");
+    } 
+    else if (!gender) {
       alert("Please Enter a Gender");
-    } else if (!name) {
+    } 
+    else if (!name) {
       alert("Please Enter a Name");
-    } else {
+    } 
+    else if (!rightHand) {
+      alert("Please Enter a Hand");
+    } 
+    else {
       if (sendLoc) {
         await setDoc(doc(usersRef, uid), {
           age: age,
@@ -68,8 +117,14 @@ export default function editAccount() {
           uid: uid,
           latitude: lat,
           longitude: lon,
+          friends: [],
+          requests: [],
+          note: note,
+          email: email,
+          rightHand: rightHand,
         });
-      } else {
+      } 
+      else {
         await setDoc(doc(usersRef, uid), {
           age: age,
           utr: utr,
@@ -82,6 +137,8 @@ export default function editAccount() {
           rightHand: rightHand,
           latitude: null,
           longitude: null,
+          friends: [],
+          requests: []
         });
       }
       onChangeUTR("");
@@ -115,12 +172,19 @@ export default function editAccount() {
           placeholder="Enter UTR Here"
           placeholderTextColor={"black"}
         />
-        <TextInput
+        <TextInputMask
           style={styles.input}
-          onChangeText={onChangePhone}
-          value={contact}
-          placeholder="Enter Phone Here"
+          placeholder="Enter Phone Number"
+          options={{
+            mask: '999-999-9999',
+            validator: function(value, settings) {
+              return true
+            },
+          }}
           placeholderTextColor={"black"}
+          type={'custom'}
+          value={contact}
+          onChangeText={onChangePhone}
         />
         <TextInput
           style={styles.input}
@@ -143,12 +207,16 @@ export default function editAccount() {
           placeholder="Enter a Note"
           placeholderTextColor={"black"}
         />
-        <TextInput
+        <TextInputMask
           style={styles.input}
-          onChangeText={onChangeNote}
-          value={note}
-          placeholder="Enter a Note"
+          placeholder="Enter Birthday (MM-DD-YYYY)"
+          options={{
+            format: 'MM-DD-YYYY'
+          }}
           placeholderTextColor={"black"}
+          type={'datetime'}
+          value={bday}
+          onChangeText={onChangeBday}
         />
       </View>
 
@@ -165,7 +233,7 @@ export default function editAccount() {
         <Picker
           selectedValue={rightHand}
           onValueChange={(itemValue, itemIndex) => setHand(itemValue)}
-          style={{ height: 50, width: 350, marginTop: 150, marginBottom: 250 }}
+          style={{ height: 50, width: 350, marginTop: 100, marginBottom: 100 }}
         >
           <Picker.Item label="Right" value="Right" />
           <Picker.Item label="Left" value="Left" />
@@ -187,21 +255,19 @@ export default function editAccount() {
         </View>
       </View>
 
-      {/* <View style={styles.basic}> */}
-      <UpdateButton
+      <UpdateButton 
+        style={styles.pickerSpace}
         type="primary"
-        progress
         onPress={() => Create()}
         borderColor="green"
         borderWidth={2}
         progressLoadingTime={1000}
-        width={450}
+        width={350}
         height={80}
         textSize={20}
       >
         Update Information
       </UpdateButton>
-      {/* </View> */}
     </ScrollView>
   );
 }
@@ -249,7 +315,7 @@ const styles = StyleSheet.create({
   },
   pickerSpace: {
     alignItems: "center",
-    // marginBottom: 150,
+    marginBottom: 150,
     // backgroundColor: "#f194ff",
     // justifyContent: "space-evenly",
   },
