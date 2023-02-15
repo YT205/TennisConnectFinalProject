@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Button } from "react-native"
+import { Text, View, StyleSheet, Button, Alert } from "react-native"
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import { SafeAreaView } from 'react-navigation';
 import * as Location from 'expo-location'
 import Btn from '../components/Btn'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAuth } from "firebase/auth";
+import { setDoc, collection, doc, getDocs, getDoc } from 'firebase/firestore';
+import { db } from "./Firebase";
 
 import * as data from "../assets/courts.json";
 
@@ -43,7 +46,7 @@ export default class Maps extends Component{
   }
 
   componentDidMount(){
-    this.getLocation();
+    this.checkPerm();
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -56,6 +59,97 @@ export default class Maps extends Component{
         this.pushCourts();
       }); 
     }
+  }
+
+  checkPerm = () => {
+    (async () => {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      const ownUid = user.uid;
+      const docRef = doc(db, "Users", ownUid);
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists()){
+        const data = docSnap.data();
+        if(!data.latitude){
+          Alert.alert(
+            "Use Location",
+            "Tennis Connect would like to use location while the app is in use and in the background for the Maps and Matchmaking functions.",
+            [
+              {
+                text: "Always Allow",
+                onPress: () => this.addLocation(),
+              },
+              { text: "Allow Once", onPress: () => this.getLocation() },
+              {
+                text: "Don't Allow",
+                onPress: () => Alert.alert("Don't Allow Pressed", "You can change this anytime in the Account Tab"),
+                style: "cancel",
+              },
+            ]
+          );
+          return;
+        }
+        else {
+          this.getLocation();
+        }
+      }
+      else {
+        Alert.alert(
+          "Use Location",
+          "Tennis Connect would like to use location while the app is in use and in the background for the Maps and Matchmaking functions.",
+          [
+            {
+              text: "Always Allow",
+              onPress: () => this.addLocation(),
+            },
+            { text: "Allow Once", onPress: () => this.getLocation()},
+            {
+              text: "Don't Allow",
+              onPress: () => Alert.alert("Don't Allow Pressed", "You can change this anytime in the Account Tab"),
+              style: "cancel",
+            },
+          ]
+        );
+        return;
+      }
+    })();
+  }
+
+  addLocation = () => {
+    (async () => {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      const ownUid = user.uid;
+      const usersRef = collection(db, "Users");
+
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+      }
+      Location.setGoogleApiKey(apiKey);
+      let { coords } = await Location.getCurrentPositionAsync();
+      this.setState({longitude: coords.longitude, latitude: coords.latitude}, () => {
+        this.pushCourts();
+      });
+
+      await setDoc(doc(usersRef, ownUid), {
+        age: null,
+        utr: null,
+        contact: null,
+        gender: null,
+        name: null,
+        uid: ownUid,
+        latitude: null,
+        longitude: null,
+        friends: [],
+        requests: [],
+        note: null,
+        email: null,
+        rightHand: null,
+        latitude: coords.latitude,
+        longitude: coords.longitude
+      });
+    })();
   }
 
   getLocation = () => {

@@ -1,6 +1,3 @@
-
-
-
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Image, TouchableOpacity, LogBox } from 'react-native';
@@ -28,6 +25,7 @@ const styles = StyleSheet.create({
 
 const Tabs = () => {
     LogBox.ignoreAllLogs()
+    LogBox.ignoreLogs(["EventEmitter.removeListener"]);
     return(
         <Tab.Navigator
             screenOptions={{

@@ -128,6 +128,7 @@ export default function Answer({navigation}){
                   onChangeText={onChangeAnswer}
                   value={ans}
                   placeholder="Enter Answer Here"
+                  placeholderTextColor={"black"}
                 />
             </View>  
 
@@ -195,23 +196,19 @@ const styles = StyleSheet.create({
     },
     question: {
       fontSize: 24,
-      fontFamily: "",
       color: "#f0f0f0"
     },
     answer: {
       fontSize: 24,
-      fontFamily: "",
       color: "#375e94"
     },
     votes: {
       fontSize: 16,
-      fontFamily: "",
       color: '#30B731',
     },
     desc: {
       fontSize: 14,
-      fontFamily: "Optima",
-      color: "#30B731"
+      color: "#b8bab9"
     },
     buttonImageIconStyle: {
       padding: 15,

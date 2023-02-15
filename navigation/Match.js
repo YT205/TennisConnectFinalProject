@@ -7,6 +7,7 @@ import 'firebase/compat/firestore';
 import { setDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import Btn from '../components/Btn';
 import 'react-native-gesture-handler';
+import { initialWindowSafeAreaInsets } from 'react-native-safe-area-context';
 
 class User {
   constructor(uid, utr, age, name, gender, contact, email, rightHand, latitude, longitude, friends, requests) {
@@ -32,7 +33,7 @@ export default function Match({ navigation }) {
   const [userLat, setLat] = useState(null);
   const [userLon, setLong] = useState(null);
 
-  const [refreshing, setRefreshing] = useState(false);
+  // const [refreshing, setRefreshing] = useState(false);
 
   const [handFilterR, setHandR] = useState(true);
   const [handFilterL, setHandL] = useState(true);
@@ -65,6 +66,7 @@ export default function Match({ navigation }) {
     setUTRMin(UTRMin);
     setUTRMax(UTRMax);
     setRange(range);
+    // setRefreshing(false);
   }
 
   useEffect(() => {
@@ -75,6 +77,7 @@ export default function Match({ navigation }) {
     readUsers();
     getCoords();
   }, [filteredArr])
+
 
   async function getCoords(){
     const uid = user.uid;
@@ -116,6 +119,7 @@ export default function Match({ navigation }) {
       }
       onChangeArray(tempQuestionsArray);
     })
+    // setRefreshing(false);
   }
 
   const userConverter = {
@@ -188,7 +192,7 @@ export default function Match({ navigation }) {
 
   // const onRefresh = useCallback(async () => {
   //   setRefreshing(true);
-  //   readUsers();
+  //   clearUsers();
   // }, [refreshing]);
 
   return (

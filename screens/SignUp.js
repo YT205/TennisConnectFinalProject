@@ -13,7 +13,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#CAD1D5",
         justifyContent: "center",
         alignItems: "center"
-    }
+    },
+    smolButton: {
+        fontSize: 16,
+        color: "#02021c"
+    },
 })
 
 export default function SignUpScreen({ navigation }) {
@@ -56,8 +60,11 @@ export default function SignUpScreen({ navigation }) {
         <TextBox placeholder="Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd")} placeholderTextColor={"black"}/>
         <TextBox placeholder="Confirm Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd2")} placeholderTextColor={"black"}/>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "92%", }}>
-            <Btn onClick={() => SignUp()} title="Sign Up" style={{ width: "48%" }} />
-            <Btn onClick={() => navigation.replace("Login")} title="Login" style={{ width: "48%", backgroundColor: "#344869" }} />
+            <Btn onClick={() => SignUp()} title="Sign Up" style={{ width: "100%" }} />
+        </View>
+        <View style={{marginVertical: 25}}>
+            <Text style={styles.smolButton}>Already have an account? <Text onPress={() => navigation.replace("Login")} 
+                style={{textDecorationLine: 'underline'}}>Login</Text></Text>
         </View>
     </View>
 }

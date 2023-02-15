@@ -33,11 +33,13 @@ export default function Post({ navigation }) {
                 onChangeText={onChangeQuestion}
                 value={quest}
                 placeholder="Enter Question Here"
+                placeholderTextColor={"black"}
             />
             <Txt
                 onChangeText={onChangeDesc}
                 value={desc}
                 placeholder="Enter Desription Here"
+                placeholderTextColor={"black"}
             />
             <Btn
                 style={styles.buttonsContainer}

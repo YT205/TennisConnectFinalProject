@@ -94,9 +94,6 @@ export default function editAccount() {
     if (!utr) {
       alert("Please Enter a UTR");
     } 
-    else if (!contact) {
-      alert("Please Enter a Phone Number");
-    } 
     else if (!gender) {
       alert("Please Enter a Gender");
     } 

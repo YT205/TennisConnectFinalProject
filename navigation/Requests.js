@@ -63,6 +63,23 @@ export default function Requests({ navigation }) {
         {
           merge: true
         });
+
+        const docRef2 = doc(db, "Users", item.uid);
+        const docSnap2 = await getDoc(docRef2);
+        const data2 = docSnap2.data();
+        if(data2.friends.length > 0){
+          var friendsArr2 = [...data2.friends]
+        }
+        else{
+          var friendsArr2 = [];
+        }
+        friendsArr.push(item.uid);
+        await setDoc(doc(usersRef, item.uid), {
+          friends: friendsArr2
+        },
+        {
+          merge: true
+        });
         alert("You are now friends with " + item.name);
     }
 

@@ -5,6 +5,7 @@ import Btn from "../components/Btn"
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import Button from '../components/Btn';
 
 const styles = StyleSheet.create({
     view: {
@@ -13,7 +14,11 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "center",
         alignItems: "center"
-    }
+    },
+    smolButton: {
+        fontSize: 16,
+        color: "#02021c"
+    },
 })
 
 export default function Loginscreen({ navigation }) {
@@ -62,8 +67,11 @@ export default function Loginscreen({ navigation }) {
             placeholderTextColor={"black"}
         />
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "92%", }}>
-            <Btn onClick={() => Login()} title="Login" style={{ width: "48%" }} />
-            <Btn onClick={() => navigation.navigate("Sign Up")} title="Sign Up" style={{ width: "48%", color: "black" }} />
+            <Btn onClick={() => Login()} title="Login" style={{ width: "100%" }} />
+        </View>
+        <View style={{marginVertical: 25}}>
+            <Text style={styles.smolButton}>Don't have an account? <Text onPress={() => navigation.navigate("Sign Up")} 
+                style={{textDecorationLine: 'underline'}}>Sign Up</Text></Text>
         </View>
     </View>
 }

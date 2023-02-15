@@ -22,11 +22,9 @@ export default function Answer({navigation}){
       const ownUid = user.uid;
 
       if(!navigation.getParam('requests')){
-        // console.log("0")
         var pastRequests = [...navigation.getParam('requests')];
       }
       else if(navigation.getParam('requests').length == 0){
-        // console.log("1")
         var pastRequests = [];
         pastRequests.push(ownUid);
       }
@@ -35,7 +33,6 @@ export default function Answer({navigation}){
         console.log("3")
       }
       else{
-        // console.log("2")
         var pastRequests = [...navigation.getParam('requests')];
         pastRequests.push(ownUid);
       }
@@ -66,6 +63,7 @@ export default function Answer({navigation}){
             title="Request Contact Info"
             style={styles.buttonsContainer}
             onClick={() => {
+              alert("You sent a friend request")
               request()
             }}
           />
@@ -78,7 +76,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#CAD1D5',
-      alignItems: 'center',
+      // alignItems: 'center',
       justifyContent: 'center',
     },
     mainItem: {

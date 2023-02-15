@@ -80,11 +80,15 @@ export default function Forum({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Txt
-        onChangeText={setSearch}
-        value={search}
-        placeholder="Enter Search Here"
-      />
+      <View style={styles.container2}>
+        <Txt
+          onChangeText={setSearch}
+          value={search}
+          placeholder="Enter Search Here"
+          placeholderTextColor={"black"}
+        />
+      </View>
+    
       <FlatList
         keyExtractor={item => item.i}
           data={postArray}
@@ -100,13 +104,14 @@ export default function Forum({ navigation }) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
       />
-
-      <Btn
+      <View style={styles.container2}>
+        <Btn
         style={styles.buttonsContainer}
         onClick={() => navigation.navigate('Post')}
         color="#2145a6"
         title="Post Question"
       ></Btn>
+      </View>
     </SafeAreaView>
   );
 }
@@ -115,8 +120,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#CAD1D5',
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  container2: {
+    backgroundColor: '#CAD1D5',
+    alignItems: 'center'
   },
   buttonsContainer: {
     flexDirection: 'row',
